@@ -35,37 +35,51 @@ a new job matching your keywords is posted.
 
 ## Adding more companies
 
-`config.json` currently includes TD, Intact, Manulife, and Sun Life —
-confirmed Workday tenants. To add another company, you need three things:
-`tenant`, `wd_number`, and `site`. Here's the fastest way to find them,
-takes about a minute per company:
+`config.json` currently covers Workday-based companies (TD, Intact, Manulife,
+Sun Life, Desjardins, Interac, Moneris, Kyndryl) and one Lever-based company
+(PointClickCare). Each entry has an `"ats"` field telling the script which
+API shape to expect — `"workday"` (the default if omitted) or `"lever"`.
 
-1. Go to the company's careers page and search/browse to their job listings
-   until the URL looks like:
+**Adding a Workday company** needs three things: `tenant`, `wd_number`, and
+`site`. Fastest way to find them, about a minute per company:
+
+1. Go to the company's careers page and browse to job listings until the
+   URL looks like:
    `https://COMPANY.wdN.myworkdayjobs.com/en-US/SITE_NAME/job/...`
 2. Read off the three pieces:
    - `tenant` = the part before `.wd` (e.g. `td`, `manulife`)
-   - `wd_number` = the digit right after `wd` (usually `1`, `3`, or `5`)
-   - `site` = the segment right after the tenant (e.g. `TD_Bank_Careers`,
+   - `wd_number` = the digit right after `wd` (usually `1`, `3`, `5`, or `10`)
+   - `site` = the segment right after the locale (e.g. `TD_Bank_Careers`,
      `MFCJH_Jobs`)
-3. Add a new entry to the `companies` array in `config.json`:
+3. Add an entry:
    ```json
    {
      "name": "Some Company",
+     "ats": "workday",
      "tenant": "somecompany",
      "wd_number": "1",
      "site": "SomeCompanySite"
    }
    ```
 
-**If the URL doesn't say `myworkdayjobs.com`, that company isn't on Workday**
-and this script won't work for it — it'd need a different scraper for
-whatever ATS they use (Taleo, iCIMS, SuccessFactors, Greenhouse, Lever,
-etc.). From your list, likely non-Workday: CGI, Accenture, IBM, Cognizant,
-Infosys, TCS, DXC, Ontario Public Service, City of Toronto, Metrolinx, TTC,
-Government of Canada. Worth checking each — happy to help build additional
-scrapers for whichever of those turn out to matter most once you've applied
-to the Workday-based ones.
+**Adding a Lever company** only needs the tenant slug — check by going to
+`jobs.lever.co/COMPANY` (it'll redirect there from most Lever-powered career
+pages). Add:
+```json
+{
+  "name": "Some Company",
+  "ats": "lever",
+  "tenant": "somecompany"
+}
+```
+
+**If a company's URL doesn't match either pattern**, it's on a different ATS
+(Taleo, iCIMS, SuccessFactors, Greenhouse, etc.) and would need a new fetcher
+function added to `check_jobs.py` — happy to help build one if a specific
+company turns out to matter a lot to you. Confirmed NOT on Workday or Lever
+from your original list: Canada Life, Bell, Veeva Systems, CGI, Ontario
+Public Service, City of Toronto, Metrolinx (worth double-checking the last
+four yourself since they weren't fully confirmed either way).
 
 ## Tuning keyword matching
 
