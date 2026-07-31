@@ -10,6 +10,19 @@
     "technical",
     "swe"
   ],
+  "exclude_keywords": [
+    "senior",
+    "sr.",
+    "sr ",
+    "lead",
+    "principal",
+    "staff",
+    "director",
+    "manager",
+    "head of",
+    "vp",
+    "vice president"
+  ],
   "companies": [
     {
       "name": "TD Bank",
