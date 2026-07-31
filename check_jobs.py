@@ -139,6 +139,13 @@ def matches_exclusions(title, exclude_keywords):
     return any(kw.lower() in title_lower for kw in exclude_keywords)
 
 
+def matches_location(location, location_keywords):
+    if not location_keywords:
+        return True  # no filter configured, allow everything
+    location_lower = location.lower()
+    return any(kw.lower() in location_lower for kw in location_keywords)
+
+
 def job_url(company, posting):
     if company.get("ats") == "lever":
         return posting.get("hostedUrl", "")
@@ -178,6 +185,7 @@ def main():
 
     keywords = config.get("keywords", [])
     exclude_keywords = config.get("exclude_keywords", [])
+    location_keywords = config.get("location_keywords", [])
     companies = config.get("companies", [])
 
     new_count = 0
@@ -192,8 +200,9 @@ def main():
             p for p in postings
             if matches_keywords(get_title(company, p), keywords)
             and not matches_exclusions(get_title(company, p), exclude_keywords)
+            and matches_location(get_location(company, p), location_keywords)
         ]
-        print(f"[INFO] {name}: {len(matched)} posting(s) matched keywords out of {len(postings)} fetched")
+        print(f"[INFO] {name}: {len(matched)} posting(s) matched keywords+location out of {len(postings)} fetched")
 
         current_ids = []
         for posting in matched:
