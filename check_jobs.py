@@ -25,9 +25,20 @@ DISCORD_WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_URL")
 # How many of the most recent postings to pull per company per run.
 # Workday's default sort is newest-first, so this is plenty to catch
 # anything new since the last run (every 15-30 min).
-FETCH_LIMIT = 50
+# NOTE: Workday's CXS API commonly rejects limit values above 20 with a 400.
+FETCH_LIMIT = 20
 
 REQUEST_TIMEOUT = 20
+
+# Workday blocks/empties requests that don't look like a real browser.
+HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+    ),
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
 
 
 def load_json(path, default):
@@ -52,11 +63,16 @@ def fetch_jobs(company):
     body = {"appliedFacets": {}, "limit": FETCH_LIMIT, "offset": 0, "searchText": ""}
 
     try:
-        resp = requests.post(url, json=body, timeout=REQUEST_TIMEOUT)
+        resp = requests.post(url, json=body, headers=HEADERS, timeout=REQUEST_TIMEOUT)
         resp.raise_for_status()
-        return resp.json().get("jobPostings", [])
+        data = resp.json()
+        postings = data.get("jobPostings", [])
+        print(f"[INFO] {company['name']}: fetched {len(postings)} posting(s) (total available: {data.get('total', '?')})")
+        return postings
     except requests.RequestException as e:
         print(f"[WARN] Failed to fetch jobs for {company['name']}: {e}", file=sys.stderr)
+        if e.response is not None:
+            print(f"[WARN] Response body: {e.response.text[:500]}", file=sys.stderr)
         return []
 
 
@@ -116,6 +132,7 @@ def main():
 
         postings = fetch_jobs(company)
         matched = [p for p in postings if matches_keywords(p.get("title", ""), keywords)]
+        print(f"[INFO] {name}: {len(matched)} posting(s) matched keywords out of {len(postings)} fetched")
 
         current_ids = []
         for posting in matched:
