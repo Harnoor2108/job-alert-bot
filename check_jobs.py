@@ -81,6 +81,11 @@ def matches_keywords(title, keywords):
     return any(kw.lower() in title_lower for kw in keywords)
 
 
+def matches_exclusions(title, exclude_keywords):
+    title_lower = title.lower()
+    return any(kw.lower() in title_lower for kw in exclude_keywords)
+
+
 def job_url(company, posting):
     tenant = company["tenant"]
     wd_number = company.get("wd_number", "1")
@@ -121,6 +126,7 @@ def main():
     state = load_json(STATE_PATH, {})
 
     keywords = config.get("keywords", [])
+    exclude_keywords = config.get("exclude_keywords", [])
     companies = config.get("companies", [])
 
     new_count = 0
@@ -131,7 +137,11 @@ def main():
         seen_ids = set(state.get(key, []))
 
         postings = fetch_jobs(company)
-        matched = [p for p in postings if matches_keywords(p.get("title", ""), keywords)]
+        matched = [
+            p for p in postings
+            if matches_keywords(p.get("title", ""), keywords)
+            and not matches_exclusions(p.get("title", ""), exclude_keywords)
+        ]
         print(f"[INFO] {name}: {len(matched)} posting(s) matched keywords out of {len(postings)} fetched")
 
         current_ids = []
