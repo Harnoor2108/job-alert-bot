@@ -1,0 +1,141 @@
+#!/usr/bin/env python3
+"""
+Workday job alert bot.
+
+Polls each configured company's Workday CXS API for recent job postings,
+filters by keyword, diffs against a saved state file, and posts any
+brand-new matches to a Discord channel via webhook.
+
+Run on a schedule (see .github/workflows/job-alerts.yml).
+"""
+
+import json
+import os
+import sys
+import time
+from pathlib import Path
+
+import requests
+
+CONFIG_PATH = Path(__file__).parent / "config.json"
+STATE_PATH = Path(__file__).parent / "state.json"
+
+DISCORD_WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_URL")
+
+# How many of the most recent postings to pull per company per run.
+# Workday's default sort is newest-first, so this is plenty to catch
+# anything new since the last run (every 15-30 min).
+FETCH_LIMIT = 50
+
+REQUEST_TIMEOUT = 20
+
+
+def load_json(path, default):
+    if path.exists():
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return default
+
+
+def save_json(path, data):
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2)
+
+
+def fetch_jobs(company):
+    """Call a company's Workday CXS jobs endpoint and return raw postings."""
+    tenant = company["tenant"]
+    wd_number = company.get("wd_number", "1")
+    site = company["site"]
+
+    url = f"https://{tenant}.wd{wd_number}.myworkdayjobs.com/wday/cxs/{tenant}/{site}/jobs"
+    body = {"appliedFacets": {}, "limit": FETCH_LIMIT, "offset": 0, "searchText": ""}
+
+    try:
+        resp = requests.post(url, json=body, timeout=REQUEST_TIMEOUT)
+        resp.raise_for_status()
+        return resp.json().get("jobPostings", [])
+    except requests.RequestException as e:
+        print(f"[WARN] Failed to fetch jobs for {company['name']}: {e}", file=sys.stderr)
+        return []
+
+
+def matches_keywords(title, keywords):
+    title_lower = title.lower()
+    return any(kw.lower() in title_lower for kw in keywords)
+
+
+def job_url(company, posting):
+    tenant = company["tenant"]
+    wd_number = company.get("wd_number", "1")
+    site = company["site"]
+    external_path = posting.get("externalPath", "")
+    return f"https://{tenant}.wd{wd_number}.myworkdayjobs.com/en-US/{site}{external_path}"
+
+
+def post_to_discord(company_name, posting, url):
+    if not DISCORD_WEBHOOK_URL:
+        print("[WARN] No DISCORD_WEBHOOK_URL set, skipping Discord post.", file=sys.stderr)
+        return
+
+    title = posting.get("title", "Untitled role")
+    location = posting.get("locationsText", "Location not listed")
+    posted = posting.get("postedOn", "")
+
+    payload = {
+        "embeds": [
+            {
+                "title": title,
+                "url": url,
+                "description": f"**{company_name}**\n📍 {location}\n🗓️ {posted}",
+                "color": 3447003,
+            }
+        ]
+    }
+
+    try:
+        resp = requests.post(DISCORD_WEBHOOK_URL, json=payload, timeout=REQUEST_TIMEOUT)
+        resp.raise_for_status()
+    except requests.RequestException as e:
+        print(f"[WARN] Failed to post to Discord: {e}", file=sys.stderr)
+
+
+def main():
+    config = load_json(CONFIG_PATH, {"keywords": [], "companies": []})
+    state = load_json(STATE_PATH, {})
+
+    keywords = config.get("keywords", [])
+    companies = config.get("companies", [])
+
+    new_count = 0
+
+    for company in companies:
+        name = company["name"]
+        key = f"{company['tenant']}:{company['site']}"
+        seen_ids = set(state.get(key, []))
+
+        postings = fetch_jobs(company)
+        matched = [p for p in postings if matches_keywords(p.get("title", ""), keywords)]
+
+        current_ids = []
+        for posting in matched:
+            job_id = posting.get("externalPath") or posting.get("title")
+            current_ids.append(job_id)
+
+            if job_id not in seen_ids:
+                url = job_url(company, posting)
+                print(f"[NEW] {name}: {posting.get('title')} -> {url}")
+                post_to_discord(name, posting, url)
+                new_count += 1
+                time.sleep(1)  # be gentle on the Discord rate limit
+
+        # Keep the union of old + current so we don't lose history if a
+        # posting temporarily drops off the first page of results.
+        state[key] = list(seen_ids.union(current_ids))[-300:]
+
+    save_json(STATE_PATH, state)
+    print(f"Done. {new_count} new matching posting(s) found.")
+
+
+if __name__ == "__main__":
+    main()

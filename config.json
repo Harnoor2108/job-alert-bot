@@ -1,0 +1,39 @@
+{
+  "keywords": [
+    "software engineer",
+    "software developer",
+    "developer",
+    "engineer",
+    "analyst",
+    "associate",
+    "it ",
+    "technical",
+    "swe"
+  ],
+  "companies": [
+    {
+      "name": "TD Bank",
+      "tenant": "td",
+      "wd_number": "3",
+      "site": "TD_Bank_Careers"
+    },
+    {
+      "name": "Intact Financial",
+      "tenant": "intactfc",
+      "wd_number": "3",
+      "site": "intactfc"
+    },
+    {
+      "name": "Manulife",
+      "tenant": "manulife",
+      "wd_number": "3",
+      "site": "MFCJH_Jobs"
+    },
+    {
+      "name": "Sun Life",
+      "tenant": "sunlife",
+      "wd_number": "3",
+      "site": "Experienced-Jobs"
+    }
+  ]
+}
