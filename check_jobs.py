@@ -53,7 +53,7 @@ def save_json(path, data):
         json.dump(data, f, indent=2)
 
 
-def fetch_jobs(company):
+def fetch_workday_jobs(company):
     """Call a company's Workday CXS jobs endpoint and return raw postings."""
     tenant = company["tenant"]
     wd_number = company.get("wd_number", "1")
@@ -76,6 +76,59 @@ def fetch_jobs(company):
         return []
 
 
+def fetch_lever_jobs(company):
+    """Call a company's Lever public postings API and return raw postings."""
+    tenant = company["tenant"]
+    url = f"https://api.lever.co/v0/postings/{tenant}?mode=json"
+
+    try:
+        resp = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT)
+        resp.raise_for_status()
+        postings = resp.json()
+        print(f"[INFO] {company['name']}: fetched {len(postings)} posting(s) from Lever")
+        return postings
+    except requests.RequestException as e:
+        print(f"[WARN] Failed to fetch jobs for {company['name']}: {e}", file=sys.stderr)
+        if e.response is not None:
+            print(f"[WARN] Response body: {e.response.text[:500]}", file=sys.stderr)
+        return []
+
+
+def fetch_jobs(company):
+    ats = company.get("ats", "workday")
+    if ats == "lever":
+        return fetch_lever_jobs(company)
+    return fetch_workday_jobs(company)
+
+
+def get_title(company, posting):
+    if company.get("ats") == "lever":
+        return posting.get("text", "")
+    return posting.get("title", "")
+
+
+def get_job_id(company, posting):
+    if company.get("ats") == "lever":
+        return posting.get("id", "")
+    return posting.get("externalPath") or posting.get("title", "")
+
+
+def get_location(company, posting):
+    if company.get("ats") == "lever":
+        return posting.get("categories", {}).get("location", "Location not listed")
+    return posting.get("locationsText", "Location not listed")
+
+
+def get_posted(company, posting):
+    if company.get("ats") == "lever":
+        ts = posting.get("createdAt")
+        if ts:
+            # Lever gives epoch milliseconds
+            return time.strftime("%Y-%m-%d", time.gmtime(ts / 1000))
+        return ""
+    return posting.get("postedOn", "")
+
+
 def matches_keywords(title, keywords):
     title_lower = title.lower()
     return any(kw.lower() in title_lower for kw in keywords)
@@ -87,6 +140,8 @@ def matches_exclusions(title, exclude_keywords):
 
 
 def job_url(company, posting):
+    if company.get("ats") == "lever":
+        return posting.get("hostedUrl", "")
     tenant = company["tenant"]
     wd_number = company.get("wd_number", "1")
     site = company["site"]
@@ -94,19 +149,15 @@ def job_url(company, posting):
     return f"https://{tenant}.wd{wd_number}.myworkdayjobs.com/en-US/{site}{external_path}"
 
 
-def post_to_discord(company_name, posting, url):
+def post_to_discord(company_name, title, location, posted, url):
     if not DISCORD_WEBHOOK_URL:
         print("[WARN] No DISCORD_WEBHOOK_URL set, skipping Discord post.", file=sys.stderr)
         return
 
-    title = posting.get("title", "Untitled role")
-    location = posting.get("locationsText", "Location not listed")
-    posted = posting.get("postedOn", "")
-
     payload = {
         "embeds": [
             {
-                "title": title,
+                "title": title or "Untitled role",
                 "url": url,
                 "description": f"**{company_name}**\n📍 {location}\n🗓️ {posted}",
                 "color": 3447003,
@@ -133,26 +184,27 @@ def main():
 
     for company in companies:
         name = company["name"]
-        key = f"{company['tenant']}:{company['site']}"
+        key = f"{company['tenant']}:{company.get('site', company.get('ats', 'default'))}"
         seen_ids = set(state.get(key, []))
 
         postings = fetch_jobs(company)
         matched = [
             p for p in postings
-            if matches_keywords(p.get("title", ""), keywords)
-            and not matches_exclusions(p.get("title", ""), exclude_keywords)
+            if matches_keywords(get_title(company, p), keywords)
+            and not matches_exclusions(get_title(company, p), exclude_keywords)
         ]
         print(f"[INFO] {name}: {len(matched)} posting(s) matched keywords out of {len(postings)} fetched")
 
         current_ids = []
         for posting in matched:
-            job_id = posting.get("externalPath") or posting.get("title")
+            job_id = get_job_id(company, posting)
             current_ids.append(job_id)
 
             if job_id not in seen_ids:
                 url = job_url(company, posting)
-                print(f"[NEW] {name}: {posting.get('title')} -> {url}")
-                post_to_discord(name, posting, url)
+                title = get_title(company, posting)
+                print(f"[NEW] {name}: {title} -> {url}")
+                post_to_discord(name, title, get_location(company, posting), get_posted(company, posting), url)
                 new_count += 1
                 time.sleep(1)  # be gentle on the Discord rate limit
 
