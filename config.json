@@ -26,27 +26,71 @@
   "companies": [
     {
       "name": "TD Bank",
+      "ats": "workday",
       "tenant": "td",
       "wd_number": "3",
       "site": "TD_Bank_Careers"
     },
     {
       "name": "Intact Financial",
+      "ats": "workday",
       "tenant": "intactfc",
       "wd_number": "3",
       "site": "intactfc"
     },
     {
       "name": "Manulife",
+      "ats": "workday",
       "tenant": "manulife",
       "wd_number": "3",
       "site": "MFCJH_Jobs"
     },
     {
       "name": "Sun Life",
+      "ats": "workday",
       "tenant": "sunlife",
       "wd_number": "3",
       "site": "Experienced-Jobs"
+    },
+    {
+      "name": "Desjardins",
+      "ats": "workday",
+      "tenant": "desjardins",
+      "wd_number": "10",
+      "site": "Desjardins"
+    },
+    {
+      "name": "Interac",
+      "ats": "workday",
+      "tenant": "interac",
+      "wd_number": "3",
+      "site": "Interac"
+    },
+    {
+      "name": "Moneris",
+      "ats": "workday",
+      "tenant": "moneris",
+      "wd_number": "3",
+      "site": "Moneris"
+    },
+    {
+      "name": "Kyndryl",
+      "ats": "workday",
+      "tenant": "kyndryl",
+      "wd_number": "5",
+      "site": "KyndrylProfessionalCareers"
+    },
+    {
+      "name": "Kyndryl Early Careers",
+      "ats": "workday",
+      "tenant": "kyndryl",
+      "wd_number": "5",
+      "site": "KyndrylEarlyCareers"
+    },
+    {
+      "name": "PointClickCare",
+      "ats": "lever",
+      "tenant": "pointclickcare"
     }
   ]
 }
