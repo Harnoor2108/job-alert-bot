@@ -11,9 +11,9 @@
   "sunlife:Experienced-Jobs": [],
   "desjardins:Desjardins": [],
   "interac:Interac": [
-    "/job/Toronto/SOC-Analyst--Tier-III_REQ-2304-1",
+    "/job/Toronto/Business-Systems-Analyst_REQ-2224-1",
     "/job/Toronto/Technical-Support-Coordinator--Bilingual-_REQ-2252",
-    "/job/Toronto/Business-Systems-Analyst_REQ-2224-1"
+    "/job/Toronto/SOC-Analyst--Tier-III_REQ-2304-1"
   ],
   "moneris:Moneris": [
     "/job/Toronto/Systems-Engineer_JR105855",
@@ -22,7 +22,8 @@
   "kyndryl:KyndrylProfessionalCareers": [],
   "kyndryl:KyndrylEarlyCareers": [],
   "pointclickcare:lever": [
-    "92bd0a33-a934-499a-81ec-b38956488cc5",
-    "9c6205d9-6ff7-4ffe-9998-068bcc49c587"
+    "2ad9ffba-40de-4995-bd62-4af1159eefb7",
+    "9c6205d9-6ff7-4ffe-9998-068bcc49c587",
+    "92bd0a33-a934-499a-81ec-b38956488cc5"
   ]
 }
