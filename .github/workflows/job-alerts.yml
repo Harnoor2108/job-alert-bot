@@ -31,8 +31,8 @@ jobs:
 
       - name: Commit updated state
         run: |
-          git config user.name "job-alert-bot"
-          git config user.email "actions@github.com"
+          git config user.name "Harnoor2108"
+          git config user.email "harnooryuv@gmail.com"
           git add state.json
           git diff --quiet --staged || git commit -m "Update job state [skip ci]"
           git push
