@@ -1,29 +1,57 @@
 {
   "td:TD_Bank_Careers": [
-    "/job/Toronto-Ontario/Software-Engineer--Java----Front-Office-Pricing---Risk_R_1503138"
+    "/job/Toronto-Ontario/Solutions-Design-IT-Specialist_R_1499434",
+    "/job/Toronto-Ontario/Transparency-Pricing---Risk-Developer_R_1500422",
+    "/job/Toronto-Ontario/Software-Engineer--Java----Front-Office-Pricing---Risk_R_1503138",
+    "/job/Toronto-Ontario/Engineer-II_R_1498986"
   ],
   "intactfc:intactfc": [
+    "/job/Toronto-Ontario-CAN/Software-Developer-II--Test-Automation-Developer-II-_R154784",
     "/job/Montral-Quebec-CAN/Analyste-en-placements_R154752"
   ],
   "manulife:MFCJH_Jobs": [
     "/job/Waterloo-Ontario/Software-Engineer--Java--Cloud---Microservices-_JR26032159-1"
   ],
-  "sunlife:Experienced-Jobs": [],
+  "sunlife:Experienced-Jobs": [
+    "/job/Toronto-Ontario/AI-Engineer_JR00126460"
+  ],
   "desjardins:Desjardins": [],
   "interac:Interac": [
     "/job/Toronto/Technical-Support-Coordinator--Bilingual-_REQ-2252",
-    "/job/Toronto/SOC-Analyst--Tier-III_REQ-2304-1",
-    "/job/Toronto/Business-Systems-Analyst_REQ-2224-1"
+    "/job/Toronto/Quality-Engineering--Specialist_REQ-2030",
+    "/job/Toronto/Technical-Writer_REQ-2194",
+    "/job/Toronto/Business-Systems-Analyst_REQ-2224-1",
+    "/job/Toronto/SOC-Analyst--Tier-III_REQ-2304-1"
   ],
   "moneris:Moneris": [
     "/job/Toronto/Systems-Engineer_JR105855",
+    "/job/Toronto/Accounting-Analyst--Contract-_JR105881",
+    "/job/Toronto/Sr-Systems-Engineer_JR105744",
     "/job/Toronto/Business-Data-Analyst--Contract-_JR105877"
   ],
   "kyndryl:KyndrylProfessionalCareers": [],
   "kyndryl:KyndrylEarlyCareers": [],
   "pointclickcare:lever": [
+    "2ad9ffba-40de-4995-bd62-4af1159eefb7",
     "9c6205d9-6ff7-4ffe-9998-068bcc49c587",
-    "92bd0a33-a934-499a-81ec-b38956488cc5",
-    "2ad9ffba-40de-4995-bd62-4af1159eefb7"
+    "92bd0a33-a934-499a-81ec-b38956488cc5"
+  ],
+  "wealthsimple:lever": [],
+  "equifax:External": [
+    "/job/CAN---Ontario---Toronto/Software-Engineer_J00175762"
+  ],
+  "transunion:TransUnion": [],
+  "accenture:AccentureCareers": [],
+  "cibc:search": [
+    "/job/Toronto-ON/Business-Analyst--Market-Risk-Solutions_2615993"
+  ],
+  "bmo:External": [
+    "/job/Toronto-ON-CAN/Audit-Analyst-Data-Scientist_R260020130",
+    "/job/Brossard-QC-CAN/Personal-Banking-Associate_R260018022",
+    "/job/MONTREAL-QC-CAN/Investment-Associate--Nesbitt-Burns_R260019107",
+    "/job/Ste-Agathe-des-Monts-QC-CAN/Personal-Banking-Associate_R260021760-1",
+    "/job/Pembroke-ON-CAN/Personal-Banking-Associate_R260021135",
+    "/job/Boucherville-QC-CAN/Personal-Banking-Associate_R260020913",
+    "/job/Brossard-QC-CAN/Personal-Banking-Associate_R260018318"
   ]
 }
