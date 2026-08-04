@@ -97,6 +97,46 @@
       "name": "PointClickCare",
       "ats": "lever",
       "tenant": "pointclickcare"
+    },
+    {
+      "name": "Wealthsimple",
+      "ats": "lever",
+      "tenant": "wealthsimple"
+    },
+    {
+      "name": "Equifax",
+      "ats": "workday",
+      "tenant": "equifax",
+      "wd_number": "5",
+      "site": "External"
+    },
+    {
+      "name": "TransUnion",
+      "ats": "workday",
+      "tenant": "transunion",
+      "wd_number": "5",
+      "site": "TransUnion"
+    },
+    {
+      "name": "Accenture",
+      "ats": "workday",
+      "tenant": "accenture",
+      "wd_number": "103",
+      "site": "AccentureCareers"
+    },
+    {
+      "name": "CIBC",
+      "ats": "workday",
+      "tenant": "cibc",
+      "wd_number": "3",
+      "site": "search"
+    },
+    {
+      "name": "BMO",
+      "ats": "workday",
+      "tenant": "bmo",
+      "wd_number": "3",
+      "site": "External"
     }
   ]
 }
