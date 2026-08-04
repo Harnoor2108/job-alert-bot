@@ -11,8 +11,10 @@ Run on a schedule (see .github/workflows/job-alerts.yml).
 
 import json
 import os
+import re
 import sys
 import time
+from datetime import datetime, timezone
 from pathlib import Path
 
 import requests
@@ -22,14 +24,9 @@ STATE_PATH = Path(__file__).parent / "state.json"
 
 DISCORD_WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_URL")
 
-# Jobs per page requested from Workday. Kept at 20 since some tenants
+# Jobs requested per keyword search term. Kept at 20 since some tenants
 # reject larger single-page requests.
 PAGE_SIZE = 20
-
-# How many pages to walk per company per run. 5 pages * 20 = up to 100
-# postings checked — enough headroom for companies with large job counts,
-# without the run taking too long or hammering the API.
-MAX_PAGES = 5
 
 REQUEST_TIMEOUT = 20
 
@@ -56,41 +53,46 @@ def save_json(path, data):
         json.dump(data, f, indent=2)
 
 
-def fetch_workday_jobs(company):
-    """Call a company's Workday CXS jobs endpoint across multiple pages
-    and return the combined raw postings."""
+def fetch_workday_jobs(company, keywords):
+    """Search a company's Workday CXS jobs endpoint once per keyword term
+    (same as typing that term into the company's own search box) and
+    return the combined, deduplicated raw postings.
+
+    This is more reliable than paginating through the default/blank-search
+    listing, since large companies (hundreds of open roles) may not sort
+    that listing by post date, so relevant postings can sit outside
+    whatever page range a blind pagination approach checks. Workday's own
+    relevance ranking for a specific search term reliably surfaces
+    matching titles near the top of the results for that term.
+    """
     tenant = company["tenant"]
     wd_number = company.get("wd_number", "1")
     site = company["site"]
     url = f"https://{tenant}.wd{wd_number}.myworkdayjobs.com/wday/cxs/{tenant}/{site}/jobs"
 
+    seen_paths = set()
     all_postings = []
-    total = None
 
-    for page in range(MAX_PAGES):
-        offset = page * PAGE_SIZE
-        body = {"appliedFacets": {}, "limit": PAGE_SIZE, "offset": offset, "searchText": ""}
+    for term in keywords:
+        body = {"appliedFacets": {}, "limit": PAGE_SIZE, "offset": 0, "searchText": term}
 
         try:
             resp = requests.post(url, json=body, headers=HEADERS, timeout=REQUEST_TIMEOUT)
             resp.raise_for_status()
             data = resp.json()
         except requests.RequestException as e:
-            print(f"[WARN] Failed to fetch jobs for {company['name']} (page {page}): {e}", file=sys.stderr)
+            print(f"[WARN] Failed to fetch jobs for {company['name']} (term '{term}'): {e}", file=sys.stderr)
             if e.response is not None:
                 print(f"[WARN] Response body: {e.response.text[:500]}", file=sys.stderr)
-            break
+            continue
 
-        postings = data.get("jobPostings", [])
-        total = data.get("total", total)
-        all_postings.extend(postings)
+        for posting in data.get("jobPostings", []):
+            path = posting.get("externalPath")
+            if path and path not in seen_paths:
+                seen_paths.add(path)
+                all_postings.append(posting)
 
-        # Stop once we've covered every posting the tenant has, or a page
-        # comes back short/empty (nothing more to fetch).
-        if len(postings) < PAGE_SIZE or (total is not None and len(all_postings) >= total):
-            break
-
-    print(f"[INFO] {company['name']}: fetched {len(all_postings)} posting(s) (total available: {total})")
+    print(f"[INFO] {company['name']}: fetched {len(all_postings)} unique posting(s) across {len(keywords)} search term(s)")
     return all_postings
 
 
@@ -112,11 +114,11 @@ def fetch_lever_jobs(company):
         return []
 
 
-def fetch_jobs(company):
+def fetch_jobs(company, keywords):
     ats = company.get("ats", "workday")
     if ats == "lever":
         return fetch_lever_jobs(company)
-    return fetch_workday_jobs(company)
+    return fetch_workday_jobs(company, keywords)
 
 
 def get_title(company, posting):
@@ -147,6 +149,35 @@ def get_posted(company, posting):
     return posting.get("postedOn", "")
 
 
+def get_days_old(company, posting):
+    """Return how many days ago a posting went live, or None if unknown.
+
+    Workday's postedOn is relative text like "Posted Today",
+    "Posted Yesterday", "Posted 3 Days Ago", or "Posted 30+ Days Ago" — not
+    an exact date. Lever gives an exact epoch timestamp, so that one's a
+    straightforward calculation.
+    """
+    if company.get("ats") == "lever":
+        ts = posting.get("createdAt")
+        if not ts:
+            return None
+        posted_dt = datetime.fromtimestamp(ts / 1000, tz=timezone.utc)
+        return (datetime.now(timezone.utc) - posted_dt).days
+
+    text = posting.get("postedOn", "")
+    if not text:
+        return None
+    text_lower = text.lower()
+    if "today" in text_lower:
+        return 0
+    if "yesterday" in text_lower:
+        return 1
+    match = re.search(r"(\d+)\+?\s*days?\s*ago", text_lower)
+    if match:
+        return int(match.group(1))
+    return None  # unrecognized format — treat as unknown rather than guess
+
+
 def matches_keywords(title, keywords):
     title_lower = title.lower()
     return any(kw.lower() in title_lower for kw in keywords)
@@ -162,6 +193,14 @@ def matches_location(location, location_keywords):
         return True  # no filter configured, allow everything
     location_lower = location.lower()
     return any(kw.lower() in location_lower for kw in location_keywords)
+
+
+def matches_recency(days_old, max_days_old):
+    if max_days_old is None:
+        return True  # no filter configured, allow everything
+    if days_old is None:
+        return True  # unknown age — don't risk hiding a real match
+    return days_old <= max_days_old
 
 
 def job_url(company, posting):
@@ -204,6 +243,7 @@ def main():
     keywords = config.get("keywords", [])
     exclude_keywords = config.get("exclude_keywords", [])
     location_keywords = config.get("location_keywords", [])
+    max_days_old = config.get("max_days_old")
     companies = config.get("companies", [])
 
     new_count = 0
@@ -213,14 +253,15 @@ def main():
         key = f"{company['tenant']}:{company.get('site', company.get('ats', 'default'))}"
         seen_ids = set(state.get(key, []))
 
-        postings = fetch_jobs(company)
+        postings = fetch_jobs(company, keywords)
         matched = [
             p for p in postings
             if matches_keywords(get_title(company, p), keywords)
             and not matches_exclusions(get_title(company, p), exclude_keywords)
             and matches_location(get_location(company, p), location_keywords)
+            and matches_recency(get_days_old(company, p), max_days_old)
         ]
-        print(f"[INFO] {name}: {len(matched)} posting(s) matched keywords+location out of {len(postings)} fetched")
+        print(f"[INFO] {name}: {len(matched)} posting(s) matched keywords+location+recency out of {len(postings)} fetched")
 
         current_ids = []
         for posting in matched:
