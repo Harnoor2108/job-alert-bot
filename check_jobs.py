@@ -22,11 +22,14 @@ STATE_PATH = Path(__file__).parent / "state.json"
 
 DISCORD_WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_URL")
 
-# How many of the most recent postings to pull per company per run.
-# Workday's default sort is newest-first, so this is plenty to catch
-# anything new since the last run (every 15-30 min).
-# NOTE: Workday's CXS API commonly rejects limit values above 20 with a 400.
-FETCH_LIMIT = 20
+# Jobs per page requested from Workday. Kept at 20 since some tenants
+# reject larger single-page requests.
+PAGE_SIZE = 20
+
+# How many pages to walk per company per run. 5 pages * 20 = up to 100
+# postings checked — enough headroom for companies with large job counts,
+# without the run taking too long or hammering the API.
+MAX_PAGES = 5
 
 REQUEST_TIMEOUT = 20
 
@@ -54,26 +57,41 @@ def save_json(path, data):
 
 
 def fetch_workday_jobs(company):
-    """Call a company's Workday CXS jobs endpoint and return raw postings."""
+    """Call a company's Workday CXS jobs endpoint across multiple pages
+    and return the combined raw postings."""
     tenant = company["tenant"]
     wd_number = company.get("wd_number", "1")
     site = company["site"]
-
     url = f"https://{tenant}.wd{wd_number}.myworkdayjobs.com/wday/cxs/{tenant}/{site}/jobs"
-    body = {"appliedFacets": {}, "limit": FETCH_LIMIT, "offset": 0, "searchText": ""}
 
-    try:
-        resp = requests.post(url, json=body, headers=HEADERS, timeout=REQUEST_TIMEOUT)
-        resp.raise_for_status()
-        data = resp.json()
+    all_postings = []
+    total = None
+
+    for page in range(MAX_PAGES):
+        offset = page * PAGE_SIZE
+        body = {"appliedFacets": {}, "limit": PAGE_SIZE, "offset": offset, "searchText": ""}
+
+        try:
+            resp = requests.post(url, json=body, headers=HEADERS, timeout=REQUEST_TIMEOUT)
+            resp.raise_for_status()
+            data = resp.json()
+        except requests.RequestException as e:
+            print(f"[WARN] Failed to fetch jobs for {company['name']} (page {page}): {e}", file=sys.stderr)
+            if e.response is not None:
+                print(f"[WARN] Response body: {e.response.text[:500]}", file=sys.stderr)
+            break
+
         postings = data.get("jobPostings", [])
-        print(f"[INFO] {company['name']}: fetched {len(postings)} posting(s) (total available: {data.get('total', '?')})")
-        return postings
-    except requests.RequestException as e:
-        print(f"[WARN] Failed to fetch jobs for {company['name']}: {e}", file=sys.stderr)
-        if e.response is not None:
-            print(f"[WARN] Response body: {e.response.text[:500]}", file=sys.stderr)
-        return []
+        total = data.get("total", total)
+        all_postings.extend(postings)
+
+        # Stop once we've covered every posting the tenant has, or a page
+        # comes back short/empty (nothing more to fetch).
+        if len(postings) < PAGE_SIZE or (total is not None and len(all_postings) >= total):
+            break
+
+    print(f"[INFO] {company['name']}: fetched {len(all_postings)} posting(s) (total available: {total})")
+    return all_postings
 
 
 def fetch_lever_jobs(company):
