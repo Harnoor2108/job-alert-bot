@@ -8,6 +8,7 @@ a new job matching your keywords is posted.
 1. **Create a GitHub repo** (private is fine) and push these files to it:
    - `config.json`
    - `check_jobs.py`
+   - `requirements.txt`
    - `.github/workflows/job-alerts.yml`
    - `README.md` (this file)
 
@@ -29,7 +30,7 @@ a new job matching your keywords is posted.
    Without this, the first run will treat every existing job as "new" and
    flood your Discord channel.
 
-5. That's it. The workflow runs every 15 minutes automatically. You can also
+5. That's it. The workflow runs every 30 minutes automatically. You can also
    trigger it manually from the repo's **Actions** tab → "Job Alerts" →
    "Run workflow" to test it right away.
 
@@ -97,3 +98,9 @@ Analyst" without also matching every word containing "it".
 - If a run fails to fetch a company's page (rate limiting, temporary
   outage), it just skips that company for the run and logs a warning to
   the Actions log — it won't crash the whole workflow.
+- To change how often the bot runs, edit the `cron` line in
+  `.github/workflows/job-alerts.yml`. Runs never overlap, and the state
+  commit is made by `github-actions[bot]` and rebased onto `main` if `main`
+  changed during the run.
+- The **Tests** workflow runs the test suite and validates `config.json` on
+  every pull request, so a typo in the config is caught before it breaks the bot.
