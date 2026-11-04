@@ -14,7 +14,7 @@ import os
 import re
 import sys
 import time
-from datetime import datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 import requests
@@ -29,6 +29,11 @@ DISCORD_WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_URL")
 PAGE_SIZE = 20
 
 REQUEST_TIMEOUT = 20
+
+# A job is forgotten once it hasn't appeared in our matched results for this
+# many days. Long enough that a posting briefly falling out of search results
+# isn't re-alerted; short enough to keep state.json small.
+STATE_RETENTION_DAYS = 60
 
 # Workday blocks/empties requests that don't look like a real browser.
 HEADERS = {
@@ -51,6 +56,41 @@ def load_json(path, default):
 def save_json(path, data):
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
+
+
+def today_str():
+    return datetime.now(timezone.utc).date().isoformat()
+
+
+def normalize_company_state(raw, today):
+    """Return one company's state as {job_id: {"first_seen", "last_seen"}}.
+
+    Older versions of this script stored a plain list of job IDs. Those are
+    migrated by treating every ID as seen today, so nothing already alerted
+    on gets posted again.
+    """
+    if not raw:
+        return {}
+    if isinstance(raw, list):
+        return {job_id: {"first_seen": today, "last_seen": today} for job_id in raw}
+    return {
+        job_id: {
+            "first_seen": entry.get("first_seen", today),
+            "last_seen": entry.get("last_seen", today),
+        }
+        for job_id, entry in raw.items()
+    }
+
+
+def prune_company_state(company_state, today):
+    """Drop entries whose last_seen is more than STATE_RETENTION_DAYS ago."""
+    cutoff = (date.fromisoformat(today) - timedelta(days=STATE_RETENTION_DAYS)).isoformat()
+    # ISO dates compare correctly as strings.
+    return {
+        job_id: entry
+        for job_id, entry in sorted(company_state.items())
+        if entry["last_seen"] >= cutoff
+    }
 
 
 def fetch_workday_jobs(company, keywords):
@@ -247,11 +287,12 @@ def main():
     companies = config.get("companies", [])
 
     new_count = 0
+    today = today_str()
 
     for company in companies:
         name = company["name"]
         key = f"{company['tenant']}:{company.get('site', company.get('ats', 'default'))}"
-        seen_ids = set(state.get(key, []))
+        company_state = normalize_company_state(state.get(key), today)
 
         postings = fetch_jobs(company, keywords)
         matched = [
@@ -263,22 +304,25 @@ def main():
         ]
         print(f"[INFO] {name}: {len(matched)} posting(s) matched keywords+location+recency out of {len(postings)} fetched")
 
-        current_ids = []
         for posting in matched:
             job_id = get_job_id(company, posting)
-            current_ids.append(job_id)
 
-            if job_id not in seen_ids:
-                url = job_url(company, posting)
-                title = get_title(company, posting)
-                print(f"[NEW] {name}: {title} -> {url}")
-                post_to_discord(name, title, get_location(company, posting), get_posted(company, posting), url)
-                new_count += 1
-                time.sleep(1)  # be gentle on the Discord rate limit
+            if job_id in company_state:
+                company_state[job_id]["last_seen"] = today
+                continue
 
-        # Keep the union of old + current so we don't lose history if a
-        # posting temporarily drops off the first page of results.
-        state[key] = list(seen_ids.union(current_ids))[-300:]
+            url = job_url(company, posting)
+            title = get_title(company, posting)
+            print(f"[NEW] {name}: {title} -> {url}")
+            post_to_discord(name, title, get_location(company, posting), get_posted(company, posting), url)
+            company_state[job_id] = {"first_seen": today, "last_seen": today}
+            new_count += 1
+            time.sleep(1)  # be gentle on the Discord rate limit
+
+        # Entries are only dropped once a job hasn't shown up in our results
+        # for STATE_RETENTION_DAYS, so a still-open posting is never forgotten
+        # (and re-posted) just because the state grew large.
+        state[key] = prune_company_state(company_state, today)
 
     save_json(STATE_PATH, state)
     print(f"Done. {new_count} new matching posting(s) found.")

@@ -92,8 +92,12 @@ Analyst" without also matching every word containing "it".
 
 - GitHub Actions free tier gives you plenty of minutes for a 15-minute cron
   on a script this lightweight.
-- The state file caps at the last 300 seen job IDs per company to keep the
-  repo small — plenty of headroom for any single company's posting volume.
+- `state.json` records, per company, each alerted job's `first_seen` and
+  `last_seen` dates. A job is only forgotten after it hasn't appeared in the
+  matched results for 60 days (`STATE_RETENTION_DAYS` in `check_jobs.py`),
+  so still-open postings are never re-alerted. Older list-format state files
+  are migrated automatically on the next run without re-posting anything.
+- Run the tests with `python -m unittest discover tests`.
 - If a run fails to fetch a company's page (rate limiting, temporary
   outage), it just skips that company for the run and logs a warning to
   the Actions log — it won't crash the whole workflow.
