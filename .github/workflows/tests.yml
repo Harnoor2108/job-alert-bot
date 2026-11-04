@@ -1,0 +1,33 @@
+name: Tests
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    paths-ignore:
+      - state.json  # the bot's own state commits don't need a test run
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Check config.json is valid JSON
+        run: python -m json.tool config.json > /dev/null
+
+      - name: Run tests
+        run: |
+          if [ -d tests ]; then
+            python -m unittest discover tests -v
+          else
+            echo "No tests directory yet."
+          fi
