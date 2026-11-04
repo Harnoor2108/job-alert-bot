@@ -83,6 +83,73 @@
     "quality assurance",
     "automation"
   ],
+  "categories": [
+    {
+      "name": "data-ai-jobs",
+      "webhook_env": "DISCORD_WEBHOOK_DATA",
+      "ping_role_id": "",
+      "keywords": [
+        "data",
+        "machine learning",
+        "AI",
+        "ML",
+        "analytics",
+        "business intelligence",
+        "BI",
+        "data scientist"
+      ]
+    },
+    {
+      "name": "dev-jobs",
+      "webhook_env": "DISCORD_WEBHOOK_DEV",
+      "ping_role_id": "",
+      "keywords": [
+        "software",
+        "developer",
+        "engineer",
+        "engineering",
+        "SWE",
+        "devops",
+        "QA",
+        "quality assurance",
+        "SDET",
+        "full stack",
+        "front end",
+        "back end",
+        "mobile",
+        "cloud"
+      ]
+    },
+    {
+      "name": "it-jobs",
+      "webhook_env": "DISCORD_WEBHOOK_IT",
+      "ping_role_id": "",
+      "keywords": [
+        "IT",
+        "support",
+        "technical",
+        "security",
+        "cyber",
+        "network",
+        "infrastructure",
+        "help desk",
+        "service desk",
+        "SOC"
+      ]
+    },
+    {
+      "name": "analyst-jobs",
+      "webhook_env": "DISCORD_WEBHOOK_ANALYST",
+      "ping_role_id": "",
+      "keywords": [
+        "analyst",
+        "business systems",
+        "functional",
+        "product owner",
+        "scrum"
+      ]
+    }
+  ],
   "location_keywords": [
     "canada",
     "ontario",

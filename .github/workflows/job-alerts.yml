@@ -33,7 +33,14 @@ jobs:
 
       - name: Run job checker
         env:
+          # Default channel: gets any job without a category, and any category
+          # whose own webhook secret below isn't set yet.
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          # One webhook per channel (see "categories" in config.json).
+          DISCORD_WEBHOOK_DEV: ${{ secrets.DISCORD_WEBHOOK_DEV }}
+          DISCORD_WEBHOOK_DATA: ${{ secrets.DISCORD_WEBHOOK_DATA }}
+          DISCORD_WEBHOOK_IT: ${{ secrets.DISCORD_WEBHOOK_IT }}
+          DISCORD_WEBHOOK_ANALYST: ${{ secrets.DISCORD_WEBHOOK_ANALYST }}
         run: python check_jobs.py
 
       - name: Commit updated state

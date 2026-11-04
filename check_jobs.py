@@ -467,9 +467,10 @@ class DiscordPoster:
     - On 429 (rate limited), waits the `retry_after` Discord asks for, then retries.
     - On 5xx or a network error, waits briefly and retries.
     - On other 4xx (bad payload, deleted webhook), gives up straight away.
-    - After MAX_CONSECUTIVE_FAILURES failed posts in a row, Discord is treated
-      as down and the rest of this run's posts are skipped. Those jobs aren't
-      saved to state, so they're retried on the next run.
+    - After MAX_CONSECUTIVE_FAILURES failed posts in a row to the same
+      webhook, that webhook is treated as down and the rest of this run's
+      posts to it are skipped. Those jobs aren't saved to state, so they're
+      retried on the next run. Other channels' webhooks keep working.
     """
 
     MAX_ATTEMPTS = 3
@@ -478,22 +479,34 @@ class DiscordPoster:
     ERROR_RETRY_WAIT = 2
 
     def __init__(self, webhook_url):
-        self.webhook_url = webhook_url
-        self.consecutive_failures = 0
+        self.webhook_url = webhook_url  # default channel
+        self._failures = {}  # webhook URL -> consecutive failures
         self.failed = 0
         self.skipped = 0
 
     @property
-    def gave_up(self):
-        return self.consecutive_failures >= self.MAX_CONSECUTIVE_FAILURES
+    def consecutive_failures(self):
+        return self._failures.get(self.webhook_url, 0)
 
-    def post(self, company_name, title, location, posted, url):
-        """Return True only if Discord confirmed the post."""
-        if not self.webhook_url:
+    @property
+    def gave_up(self):
+        return self._gave_up(self.webhook_url)
+
+    def _gave_up(self, webhook_url):
+        return self._failures.get(webhook_url, 0) >= self.MAX_CONSECUTIVE_FAILURES
+
+    def post(self, company_name, title, location, posted, url, webhook_url=None, ping_role_id=None):
+        """Return True only if Discord confirmed the post.
+
+        webhook_url: the channel to post in (defaults to DISCORD_WEBHOOK_URL).
+        ping_role_id: optional Discord role ID to @mention with the alert.
+        """
+        webhook_url = webhook_url or self.webhook_url
+        if not webhook_url:
             print("[WARN] No DISCORD_WEBHOOK_URL set, not posting (job will be retried next run).", file=sys.stderr)
             self.failed += 1
             return False
-        if self.gave_up:
+        if self._gave_up(webhook_url):
             self.skipped += 1
             return False
 
@@ -507,17 +520,21 @@ class DiscordPoster:
                 }
             ]
         }
+        if ping_role_id:
+            # allowed_mentions makes sure only this role is pinged, never @everyone.
+            payload["content"] = f"<@&{ping_role_id}>"
+            payload["allowed_mentions"] = {"roles": [str(ping_role_id)]}
 
         for attempt in range(1, self.MAX_ATTEMPTS + 1):
             wait = None
             try:
-                resp = requests.post(self.webhook_url, json=payload, timeout=REQUEST_TIMEOUT)
+                resp = requests.post(webhook_url, json=payload, timeout=REQUEST_TIMEOUT)
             except requests.RequestException as e:
                 print(f"[WARN] Discord post failed (attempt {attempt}): {e}", file=sys.stderr)
                 wait = self.ERROR_RETRY_WAIT
             else:
                 if resp.ok:
-                    self.consecutive_failures = 0
+                    self._failures[webhook_url] = 0
                     return True
                 if resp.status_code == 429:
                     wait = retry_after_seconds(resp)
@@ -533,11 +550,33 @@ class DiscordPoster:
                 time.sleep(min(wait, self.MAX_RETRY_WAIT))
 
         self.failed += 1
-        self.consecutive_failures += 1
-        if self.gave_up:
-            print(f"[WARN] {self.consecutive_failures} Discord posts failed in a row; "
-                  "skipping the rest this run.", file=sys.stderr)
+        self._failures[webhook_url] = self._failures.get(webhook_url, 0) + 1
+        if self._gave_up(webhook_url):
+            print(f"[WARN] {self._failures[webhook_url]} Discord posts failed in a row to one webhook; "
+                  "skipping the rest of its posts this run.", file=sys.stderr)
         return False
+
+
+def categorize(title, config):
+    """Return the first category in config["categories"] whose keywords match
+    the title, or None. Order matters: put specific categories first."""
+    for category in config.get("categories", []):
+        if matches_any(title, category.get("keywords", [])):
+            return category
+    return None
+
+
+def category_destination(category):
+    """(webhook_url, ping_role_id) for a category.
+
+    The webhook comes from the environment variable named in `webhook_env`
+    (a GitHub secret). If it isn't set (e.g. that channel hasn't been
+    created yet), returns None so the alert goes to the default channel.
+    """
+    if not category:
+        return None, None
+    webhook_url = os.environ.get(category.get("webhook_env", "")) or None
+    return webhook_url, category.get("ping_role_id") or None
 
 
 def retry_after_seconds(resp):
@@ -591,7 +630,12 @@ def main():
             print(f"[NEW] {name}: {title} -> {url}")
             # Only remember the job once Discord has confirmed the alert, so a
             # failed post is retried next run instead of being lost.
-            if discord.post(name, title, get_location(company, posting), get_posted(company, posting), url):
+            category = categorize(title, config)
+            webhook_url, ping_role_id = category_destination(category)
+            if category:
+                print(f"       -> #{category.get('name')}{'' if webhook_url else ' (no webhook set, using default channel)'}")
+            if discord.post(name, title, get_location(company, posting), get_posted(company, posting), url,
+                            webhook_url=webhook_url, ping_role_id=ping_role_id):
                 company_state[job_id] = {"first_seen": today, "last_seen": today}
                 new_count += 1
                 time.sleep(1)  # be gentle on the Discord rate limit
