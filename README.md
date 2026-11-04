@@ -82,6 +82,15 @@ from your original list: Canada Life, Bell, Veeva Systems, CGI, Ontario
 Public Service, City of Toronto, Metrolinx (worth double-checking the last
 four yourself since they weren't fully confirmed either way).
 
+## Location filtering
+
+`location_keywords` is matched against each job's location. When a Workday
+job is posted in several places, its search result only says "2 Locations"
+(or 3, 5...). For those, the bot opens the job's detail page to get the real
+city names before filtering. If the detail page can't be loaded, the job is
+let through and shown as "Multiple locations (details unavailable)" rather
+than silently hidden.
+
 ## Tuning keyword matching
 
 All keyword lists match **whole words or phrases** in the job title, so
