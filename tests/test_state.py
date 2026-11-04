@@ -69,7 +69,7 @@ class MainLoopTests(unittest.TestCase):
             with mock.patch.object(check_jobs, "CONFIG_PATH", config_path), \
                  mock.patch.object(check_jobs, "STATE_PATH", state_path), \
                  mock.patch.object(check_jobs, "fetch_jobs", return_value=postings), \
-                 mock.patch.object(check_jobs, "post_to_discord") as post, \
+                 mock.patch.object(check_jobs.DiscordPoster, "post", return_value=True) as post, \
                  mock.patch.object(check_jobs, "today_str", return_value=TODAY), \
                  mock.patch.object(check_jobs.time, "sleep"):
                 check_jobs.main()
