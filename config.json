@@ -148,20 +148,13 @@
       "site": "KyndrylProfessionalCareers"
     },
     {
-      "name": "Kyndryl Early Careers",
-      "ats": "workday",
-      "tenant": "kyndryl",
-      "wd_number": "5",
-      "site": "KyndrylEarlyCareers"
-    },
-    {
       "name": "PointClickCare",
       "ats": "lever",
       "tenant": "pointclickcare"
     },
     {
       "name": "Wealthsimple",
-      "ats": "lever",
+      "ats": "ashby",
       "tenant": "wealthsimple"
     },
     {
@@ -183,7 +176,8 @@
       "ats": "workday",
       "tenant": "accenture",
       "wd_number": "103",
-      "site": "AccentureCareers"
+      "site": "AccentureCareers",
+      "country": "Canada"
     },
     {
       "name": "CIBC",
