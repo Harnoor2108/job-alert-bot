@@ -133,10 +133,67 @@ def get_job_id(company, posting):
     return posting.get("externalPath") or posting.get("title", "")
 
 
+# Workday's search results show "2 Locations", "5 Locations", etc. instead of
+# city names when a job is posted in more than one place.
+MULTI_LOCATION_RE = re.compile(r"^\s*\d+\s+locations?\s*$", re.IGNORECASE)
+
+# Shown (and let through the location filter) when a job has several
+# locations but its detail page couldn't be loaded. Better to show a possible
+# match than to silently hide one.
+MULTI_LOCATION_UNKNOWN = "Multiple locations (details unavailable)"
+
+# Detail lookups made this run, keyed by job URL path, so each job's page is
+# only fetched once even though get_location() is called more than once.
+_workday_details_cache = {}
+
+
+def fetch_workday_details(company, posting):
+    """Fetch a Workday job's detail JSON (`jobPostingInfo`), or None on failure."""
+    path = posting.get("externalPath", "")
+    if not path:
+        return None
+    tenant = company["tenant"]
+    wd_number = company.get("wd_number", "1")
+    site = company["site"]
+    url = f"https://{tenant}.wd{wd_number}.myworkdayjobs.com/wday/cxs/{tenant}/{site}{path}"
+    cache_key = f"{tenant}:{site}:{path}"
+    if cache_key in _workday_details_cache:
+        return _workday_details_cache[cache_key]
+
+    info = None
+    try:
+        resp = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT)
+        resp.raise_for_status()
+        info = resp.json().get("jobPostingInfo")
+    except (requests.RequestException, ValueError) as e:
+        print(f"[WARN] Couldn't load details for {company['name']} {path}: {e}", file=sys.stderr)
+    _workday_details_cache[cache_key] = info
+    return info
+
+
+def workday_locations(info):
+    """All locations on a Workday job detail, primary first, without duplicates."""
+    locations = [info.get("location")] + list(info.get("additionalLocations") or [])
+    result = []
+    for loc in locations:
+        if isinstance(loc, str) and loc.strip() and loc.strip() not in result:
+            result.append(loc.strip())
+    return result
+
+
 def get_location(company, posting):
     if company.get("ats") == "lever":
         return posting.get("categories", {}).get("location", "Location not listed")
-    return posting.get("locationsText", "Location not listed")
+
+    text = posting.get("locationsText", "")
+    if not text:
+        return "Location not listed"
+    if not MULTI_LOCATION_RE.match(text):
+        return text
+
+    info = fetch_workday_details(company, posting)
+    locations = workday_locations(info) if info else []
+    return "; ".join(locations) if locations else MULTI_LOCATION_UNKNOWN
 
 
 def get_posted(company, posting):
@@ -191,6 +248,8 @@ def matches_exclusions(title, exclude_keywords):
 def matches_location(location, location_keywords):
     if not location_keywords:
         return True  # no filter configured, allow everything
+    if location == MULTI_LOCATION_UNKNOWN:
+        return True  # couldn't check — don't risk hiding a real match
     location_lower = location.lower()
     return any(kw.lower() in location_lower for kw in location_keywords)
 

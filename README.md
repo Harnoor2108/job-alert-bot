@@ -90,6 +90,12 @@ Analyst" without also matching every word containing "it".
 
 ## Notes
 
+- When a Workday job is posted in several places, its search result only
+  says "2 Locations" (or 3, 5...). For those, the bot opens the job's detail
+  page to get the real city names before applying `location_keywords`. If
+  the detail page can't be loaded, the job is let through and shown as
+  "Multiple locations (details unavailable)" rather than silently hidden.
+
 - GitHub Actions free tier gives you plenty of minutes for a 15-minute cron
   on a script this lightweight.
 - The state file caps at the last 300 seen job IDs per company to keep the
