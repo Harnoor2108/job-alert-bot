@@ -73,8 +73,15 @@ def fetch_workday_jobs(company, keywords):
     seen_paths = set()
     all_postings = []
 
+    # Optional "country": "Canada" in config.json limits results to that
+    # country using Workday's own location filter. Big global employers
+    # (Accenture) otherwise fill every top-20 result page with other countries.
+    applied_facets = {}
+    if company.get("country"):
+        applied_facets = workday_country_facet(company, url) or {}
+
     for term in keywords:
-        body = {"appliedFacets": {}, "limit": PAGE_SIZE, "offset": 0, "searchText": term}
+        body = {"appliedFacets": applied_facets, "limit": PAGE_SIZE, "offset": 0, "searchText": term}
 
         try:
             resp = requests.post(url, json=body, headers=HEADERS, timeout=REQUEST_TIMEOUT)
@@ -94,6 +101,90 @@ def fetch_workday_jobs(company, keywords):
 
     print(f"[INFO] {company['name']}: fetched {len(all_postings)} unique posting(s) across {len(keywords)} search term(s)")
     return all_postings
+
+
+def find_country_facet(facets, country, parent_param=""):
+    """Find Workday's filter for a country in a jobs response's `facets`.
+
+    Facets are nested groups: {"facetParameter": ..., "values": [...]}, where
+    leaf values look like {"descriptor": "Canada", "id": "...", "count": 12}.
+    The country filter's parameter name varies by tenant ("locationCountry",
+    "Location_Country", ...), so match any parameter containing "country".
+    Returns {parameter: [id]} or None.
+    """
+    for item in facets or []:
+        param = item.get("facetParameter") or parent_param
+        if isinstance(item.get("values"), list):
+            found = find_country_facet(item["values"], country, param)
+            if found:
+                return found
+        elif (
+            "country" in param.lower()
+            and str(item.get("descriptor", "")).strip().lower() == country.strip().lower()
+            and item.get("id")
+        ):
+            return {param: [item["id"]]}
+    return None
+
+
+def workday_country_facet(company, url):
+    """Look up the country filter with one blank search. None if unavailable."""
+    country = company["country"]
+    body = {"appliedFacets": {}, "limit": 1, "offset": 0, "searchText": ""}
+    try:
+        resp = requests.post(url, json=body, headers=HEADERS, timeout=REQUEST_TIMEOUT)
+        resp.raise_for_status()
+        facet = find_country_facet(resp.json().get("facets"), country)
+    except (requests.RequestException, ValueError) as e:
+        print(f"[WARN] {company['name']}: couldn't load country filters: {e}", file=sys.stderr)
+        return None
+    if facet:
+        print(f"[INFO] {company['name']}: limiting search to {country}")
+    else:
+        print(f"[WARN] {company['name']}: no '{country}' country filter found; searching all countries", file=sys.stderr)
+    return facet
+
+
+def fetch_ashby_jobs(company):
+    """Call a company's Ashby public job board API and return raw postings."""
+    tenant = company["tenant"]
+    url = f"https://api.ashbyhq.com/posting-api/job-board/{tenant}"
+
+    try:
+        resp = requests.get(url, headers=HEADERS, timeout=REQUEST_TIMEOUT)
+        resp.raise_for_status()
+        jobs = [j for j in resp.json().get("jobs", []) if j.get("isListed", True)]
+        print(f"[INFO] {company['name']}: fetched {len(jobs)} posting(s) from Ashby")
+        return jobs
+    except (requests.RequestException, ValueError) as e:
+        print(f"[WARN] Failed to fetch jobs for {company['name']}: {e}", file=sys.stderr)
+        return []
+
+
+def ashby_location(posting):
+    """Primary + secondary locations, plus the country if it isn't already named."""
+    locations = [posting.get("location")]
+    locations += [loc.get("location") for loc in posting.get("secondaryLocations") or [] if isinstance(loc, dict)]
+    locations = [loc for loc in locations if loc]
+    text = "; ".join(dict.fromkeys(locations)) or "Location not listed"
+    country = (((posting.get("address") or {}).get("postalAddress") or {}).get("addressCountry") or "")
+    if country and country.lower() not in text.lower():
+        text += f" ({country})"
+    if posting.get("isRemote") and "remote" not in text.lower():
+        text += " · Remote"
+    return text
+
+
+def ashby_published(posting):
+    """Ashby's publishedAt as an aware datetime, or None."""
+    raw = posting.get("publishedAt")
+    if not raw:
+        return None
+    try:
+        dt = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    return dt if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
 
 
 def fetch_lever_jobs(company):
@@ -117,29 +208,47 @@ def fetch_lever_jobs(company):
 def fetch_jobs(company, keywords):
     ats = company.get("ats", "workday")
     if ats == "lever":
-        return fetch_lever_jobs(company)
-    return fetch_workday_jobs(company, keywords)
+        postings = fetch_lever_jobs(company)
+    elif ats == "ashby":
+        postings = fetch_ashby_jobs(company)
+    else:
+        postings = fetch_workday_jobs(company, keywords)
+    if not postings:
+        # 0 *fetched* (not 0 matched) usually means the company moved to a
+        # different job board or its config is wrong.
+        print(f"::warning::{company['name']}: 0 postings fetched. Check its entry in config.json "
+              "(it may have moved to a different job board).")
+    return postings
 
 
 def get_title(company, posting):
+    if company.get("ats") == "ashby":
+        return posting.get("title", "")
     if company.get("ats") == "lever":
         return posting.get("text", "")
     return posting.get("title", "")
 
 
 def get_job_id(company, posting):
+    if company.get("ats") == "ashby":
+        return posting.get("id", "")
     if company.get("ats") == "lever":
         return posting.get("id", "")
     return posting.get("externalPath") or posting.get("title", "")
 
 
 def get_location(company, posting):
+    if company.get("ats") == "ashby":
+        return ashby_location(posting)
     if company.get("ats") == "lever":
         return posting.get("categories", {}).get("location", "Location not listed")
     return posting.get("locationsText", "Location not listed")
 
 
 def get_posted(company, posting):
+    if company.get("ats") == "ashby":
+        published = ashby_published(posting)
+        return published.date().isoformat() if published else ""
     if company.get("ats") == "lever":
         ts = posting.get("createdAt")
         if ts:
@@ -163,6 +272,10 @@ def get_days_old(company, posting):
             return None
         posted_dt = datetime.fromtimestamp(ts / 1000, tz=timezone.utc)
         return (datetime.now(timezone.utc) - posted_dt).days
+
+    if company.get("ats") == "ashby":
+        published = ashby_published(posting)
+        return (datetime.now(timezone.utc) - published).days if published else None
 
     text = posting.get("postedOn", "")
     if not text:
@@ -204,6 +317,8 @@ def matches_recency(days_old, max_days_old):
 
 
 def job_url(company, posting):
+    if company.get("ats") == "ashby":
+        return posting.get("jobUrl", "")
     if company.get("ats") == "lever":
         return posting.get("hostedUrl", "")
     tenant = company["tenant"]

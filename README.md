@@ -35,10 +35,12 @@ a new job matching your keywords is posted.
 
 ## Adding more companies
 
-`config.json` currently covers Workday-based companies (TD, Intact, Manulife,
-Sun Life, Desjardins, Interac, Moneris, Kyndryl) and one Lever-based company
-(PointClickCare). Each entry has an `"ats"` field telling the script which
-API shape to expect — `"workday"` (the default if omitted) or `"lever"`.
+`config.json` covers Workday-based companies (TD, CIBC, BMO, Intact,
+Manulife, Sun Life, Desjardins, Interac, Moneris, Kyndryl, Equifax,
+TransUnion, Accenture), one Lever-based company (PointClickCare) and one
+Ashby-based company (Wealthsimple). Each entry has an `"ats"` field telling
+the script which API shape to expect: `"workday"` (the default if omitted),
+`"lever"` or `"ashby"`.
 
 **Adding a Workday company** needs three things: `tenant`, `wd_number`, and
 `site`. Fastest way to find them, about a minute per company:
@@ -73,7 +75,27 @@ pages). Add:
 }
 ```
 
-**If a company's URL doesn't match either pattern**, it's on a different ATS
+**Adding an Ashby company** also only needs the slug from the job board URL,
+`jobs.ashbyhq.com/COMPANY` (Wealthsimple is `wealthsimple`):
+```json
+{
+  "name": "Some Company",
+  "ats": "ashby",
+  "tenant": "somecompany"
+}
+```
+
+**Global Workday companies:** add `"country": "Canada"` to a Workday entry
+to only search that company's Canadian jobs, using Workday's own country
+filter. Without it, a huge employer like Accenture fills every result page
+with jobs from other countries before any Canadian ones show up. If the
+filter can't be found, the bot logs a warning and searches all countries.
+
+If a company ever shows **0 postings fetched**, the Actions run shows a
+warning. That usually means it moved to a different job board, so check its
+careers page and update its entry.
+
+**If a company's URL doesn't match any of these patterns**, it's on a different ATS
 (Taleo, iCIMS, SuccessFactors, Greenhouse, etc.) and would need a new fetcher
 function added to `check_jobs.py` — happy to help build one if a specific
 company turns out to matter a lot to you. Confirmed NOT on Workday or Lever
