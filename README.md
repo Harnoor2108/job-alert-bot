@@ -98,6 +98,11 @@ Analyst" without also matching every word containing "it".
   matched results for 60 days (`STATE_RETENTION_DAYS` in `check_jobs.py`),
   so still-open postings are never re-alerted. Older list-format state files
   are migrated automatically on the next run without re-posting anything.
+- A job is only saved to `state.json` after Discord confirms its alert. If
+  Discord is rate limiting (429) or briefly down, each post is retried up to
+  3 times. Anything still unsent is retried on the next run, and the Actions
+  run shows a warning with the count. After 3 failed posts in a row the bot
+  stops posting for that run instead of hammering Discord.
 - Run the tests with `python -m unittest discover tests`.
 - If a run fails to fetch a company's page (rate limiting, temporary
   outage), it just skips that company for the run and logs a warning to

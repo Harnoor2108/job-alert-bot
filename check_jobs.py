@@ -253,27 +253,95 @@ def job_url(company, posting):
     return f"https://{tenant}.wd{wd_number}.myworkdayjobs.com/en-US/{site}{external_path}"
 
 
-def post_to_discord(company_name, title, location, posted, url):
-    if not DISCORD_WEBHOOK_URL:
-        print("[WARN] No DISCORD_WEBHOOK_URL set, skipping Discord post.", file=sys.stderr)
-        return
+class DiscordPoster:
+    """Posts job alerts to the Discord webhook, with retries.
 
-    payload = {
-        "embeds": [
-            {
-                "title": title or "Untitled role",
-                "url": url,
-                "description": f"**{company_name}**\n📍 {location}\n🗓️ {posted}",
-                "color": 3447003,
-            }
-        ]
-    }
+    - On 429 (rate limited), waits the `retry_after` Discord asks for, then retries.
+    - On 5xx or a network error, waits briefly and retries.
+    - On other 4xx (bad payload, deleted webhook), gives up straight away.
+    - After MAX_CONSECUTIVE_FAILURES failed posts in a row, Discord is treated
+      as down and the rest of this run's posts are skipped. Those jobs aren't
+      saved to state, so they're retried on the next run.
+    """
 
+    MAX_ATTEMPTS = 3
+    MAX_CONSECUTIVE_FAILURES = 3
+    MAX_RETRY_WAIT = 60  # seconds; never sleep longer than this for one retry
+    ERROR_RETRY_WAIT = 2
+
+    def __init__(self, webhook_url):
+        self.webhook_url = webhook_url
+        self.consecutive_failures = 0
+        self.failed = 0
+        self.skipped = 0
+
+    @property
+    def gave_up(self):
+        return self.consecutive_failures >= self.MAX_CONSECUTIVE_FAILURES
+
+    def post(self, company_name, title, location, posted, url):
+        """Return True only if Discord confirmed the post."""
+        if not self.webhook_url:
+            print("[WARN] No DISCORD_WEBHOOK_URL set, not posting (job will be retried next run).", file=sys.stderr)
+            self.failed += 1
+            return False
+        if self.gave_up:
+            self.skipped += 1
+            return False
+
+        payload = {
+            "embeds": [
+                {
+                    "title": title or "Untitled role",
+                    "url": url,
+                    "description": f"**{company_name}**\n📍 {location}\n🗓️ {posted}",
+                    "color": 3447003,
+                }
+            ]
+        }
+
+        for attempt in range(1, self.MAX_ATTEMPTS + 1):
+            wait = None
+            try:
+                resp = requests.post(self.webhook_url, json=payload, timeout=REQUEST_TIMEOUT)
+            except requests.RequestException as e:
+                print(f"[WARN] Discord post failed (attempt {attempt}): {e}", file=sys.stderr)
+                wait = self.ERROR_RETRY_WAIT
+            else:
+                if resp.ok:
+                    self.consecutive_failures = 0
+                    return True
+                if resp.status_code == 429:
+                    wait = retry_after_seconds(resp)
+                    print(f"[WARN] Discord rate limited (attempt {attempt}), retrying in {wait:.1f}s", file=sys.stderr)
+                elif resp.status_code >= 500:
+                    wait = self.ERROR_RETRY_WAIT
+                    print(f"[WARN] Discord returned {resp.status_code} (attempt {attempt})", file=sys.stderr)
+                else:
+                    print(f"[WARN] Discord rejected the post ({resp.status_code}): {resp.text[:300]}", file=sys.stderr)
+                    break  # retrying won't help
+
+            if attempt < self.MAX_ATTEMPTS:
+                time.sleep(min(wait, self.MAX_RETRY_WAIT))
+
+        self.failed += 1
+        self.consecutive_failures += 1
+        if self.gave_up:
+            print(f"[WARN] {self.consecutive_failures} Discord posts failed in a row; "
+                  "skipping the rest this run.", file=sys.stderr)
+        return False
+
+
+def retry_after_seconds(resp):
+    """Seconds to wait from a Discord 429 (JSON body first, then header)."""
     try:
-        resp = requests.post(DISCORD_WEBHOOK_URL, json=payload, timeout=REQUEST_TIMEOUT)
-        resp.raise_for_status()
-    except requests.RequestException as e:
-        print(f"[WARN] Failed to post to Discord: {e}", file=sys.stderr)
+        return float(resp.json().get("retry_after"))
+    except (ValueError, TypeError, AttributeError):
+        pass
+    try:
+        return float(resp.headers.get("Retry-After"))
+    except (ValueError, TypeError):
+        return 5.0
 
 
 def main():
@@ -288,6 +356,7 @@ def main():
 
     new_count = 0
     today = today_str()
+    discord = DiscordPoster(DISCORD_WEBHOOK_URL)
 
     for company in companies:
         name = company["name"]
@@ -314,10 +383,12 @@ def main():
             url = job_url(company, posting)
             title = get_title(company, posting)
             print(f"[NEW] {name}: {title} -> {url}")
-            post_to_discord(name, title, get_location(company, posting), get_posted(company, posting), url)
-            company_state[job_id] = {"first_seen": today, "last_seen": today}
-            new_count += 1
-            time.sleep(1)  # be gentle on the Discord rate limit
+            # Only remember the job once Discord has confirmed the alert, so a
+            # failed post is retried next run instead of being lost.
+            if discord.post(name, title, get_location(company, posting), get_posted(company, posting), url):
+                company_state[job_id] = {"first_seen": today, "last_seen": today}
+                new_count += 1
+                time.sleep(1)  # be gentle on the Discord rate limit
 
         # Entries are only dropped once a job hasn't shown up in our results
         # for STATE_RETENTION_DAYS, so a still-open posting is never forgotten
@@ -325,7 +396,12 @@ def main():
         state[key] = prune_company_state(company_state, today)
 
     save_json(STATE_PATH, state)
-    print(f"Done. {new_count} new matching posting(s) found.")
+    print(f"Done. {new_count} new matching posting(s) posted.")
+    unsent = discord.failed + discord.skipped
+    if unsent:
+        # "::warning::" shows up as an annotation on the GitHub Actions run.
+        print(f"::warning::{unsent} job alert(s) could not be sent to Discord "
+              f"({discord.failed} failed, {discord.skipped} skipped). They'll be retried next run.")
 
 
 if __name__ == "__main__":
