@@ -178,14 +178,48 @@ def get_days_old(company, posting):
     return None  # unrecognized format — treat as unknown rather than guess
 
 
+def keyword_pattern(keyword):
+    """Compile a keyword into a whole-word regex.
+
+    - Matches whole words/phrases only: "lead" matches "Team Lead" but not
+      "Leadership", "it" can't match inside "Credit".
+    - A keyword written in ALL CAPS (e.g. "IT", "QA") is matched
+      case-sensitively, so "IT" matches "IT Analyst" but not the word "it".
+      Everything else is case-insensitive.
+    """
+    keyword = keyword.strip()
+    flags = 0 if keyword.isupper() else re.IGNORECASE
+    return re.compile(r"(?<!\w)" + re.escape(keyword) + r"(?!\w)", flags)
+
+
+def matches_any(text, keywords):
+    return any(keyword_pattern(kw).search(text) for kw in keywords if kw.strip())
+
+
 def matches_keywords(title, keywords):
-    title_lower = title.lower()
-    return any(kw.lower() in title_lower for kw in keywords)
+    return matches_any(title, keywords)
 
 
 def matches_exclusions(title, exclude_keywords):
-    title_lower = title.lower()
-    return any(kw.lower() in title_lower for kw in exclude_keywords)
+    return matches_any(title, exclude_keywords)
+
+
+def is_wanted_title(title, config):
+    """Decide whether a job title should be alerted on.
+
+    1. It must match one of `keywords`.
+    2. It must not match `exclude_keywords` (seniority: senior, lead, ...).
+    3. If it matches `exclude_non_tech_keywords` (credit, banking, sales, ...)
+       it's dropped, unless it also matches `tech_keywords`. That keeps
+       "Cloud Developer, Banking Payments" while dropping "Credit Analyst".
+    """
+    if not matches_keywords(title, config.get("keywords", [])):
+        return False
+    if matches_exclusions(title, config.get("exclude_keywords", [])):
+        return False
+    if matches_exclusions(title, config.get("exclude_non_tech_keywords", [])):
+        return matches_any(title, config.get("tech_keywords", []))
+    return True
 
 
 def matches_location(location, location_keywords):
@@ -241,7 +275,6 @@ def main():
     state = load_json(STATE_PATH, {})
 
     keywords = config.get("keywords", [])
-    exclude_keywords = config.get("exclude_keywords", [])
     location_keywords = config.get("location_keywords", [])
     max_days_old = config.get("max_days_old")
     companies = config.get("companies", [])
@@ -256,8 +289,7 @@ def main():
         postings = fetch_jobs(company, keywords)
         matched = [
             p for p in postings
-            if matches_keywords(get_title(company, p), keywords)
-            and not matches_exclusions(get_title(company, p), exclude_keywords)
+            if is_wanted_title(get_title(company, p), config)
             and matches_location(get_location(company, p), location_keywords)
             and matches_recency(get_days_old(company, p), max_days_old)
         ]

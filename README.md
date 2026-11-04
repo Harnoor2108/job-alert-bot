@@ -83,10 +83,28 @@ four yourself since they weren't fully confirmed either way).
 
 ## Tuning keyword matching
 
-`config.json`'s `keywords` list does a simple case-insensitive substring
-match against each job title. Loosen or tighten it as you see how much
-noise you get — e.g. `"it "` (with a trailing space) is there to catch "IT
-Analyst" without also matching every word containing "it".
+All keyword lists match **whole words or phrases** in the job title, so
+`"lead"` matches "Team Lead" but not "Leadership", and `"it"` can never
+match inside "Credit". Keywords are case-insensitive, except ones written in
+ALL CAPS (`"IT"`, `"QA"`, `"AI"`), which must appear in capitals. That's how
+`"IT"` matches "IT Analyst" without matching the word "it".
+
+A title is alerted on when:
+
+1. it matches something in `keywords` (also used as the search terms sent to
+   Workday), **and**
+2. it matches nothing in `exclude_keywords` (seniority: senior, lead,
+   manager...), **and**
+3. if it matches `exclude_non_tech_keywords` (credit, banking, sales,
+   fraud...), it must also match `tech_keywords`. This keeps "Cloud Developer,
+   Banking Payments" but drops "Credit Analyst" and "Personal Banking
+   Associate".
+
+If you see a non-tech role slip through, add a word from its title to
+`exclude_non_tech_keywords`. If a real tech role gets dropped, add a word
+from it to `tech_keywords`. Run `python -m unittest discover tests` after
+changing the lists, and add the title to `tests/test_keywords.py` so it
+stays fixed.
 
 ## Notes
 
