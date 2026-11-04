@@ -90,7 +90,7 @@ Analyst" without also matching every word containing "it".
 
 ## Notes
 
-- GitHub Actions free tier gives you plenty of minutes for a 15-minute cron
+- GitHub Actions free tier gives you plenty of minutes for a 30-minute cron
   on a script this lightweight.
 - `state.json` records, per company, each alerted job's `first_seen` and
   `last_seen` dates. A job is only forgotten after it hasn't appeared in the
