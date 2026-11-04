@@ -104,6 +104,37 @@ from your original list: Canada Life, Bell, Veeva Systems, CGI, Ontario
 Public Service, City of Toronto, Metrolinx (worth double-checking the last
 four yourself since they weren't fully confirmed either way).
 
+## Separate channels per job type
+
+Alerts are sorted into channels by job title, using `categories` in
+`config.json`. The first category whose keywords match the title wins, so
+the order matters:
+
+| Category | Example titles | Secret |
+|---|---|---|
+| `data-ai-jobs` | Data Engineer, ML Engineer, Data Scientist, BI Analyst | `DISCORD_WEBHOOK_DATA` |
+| `dev-jobs` | Software Engineer, Developer, QA/Quality Engineer, SDET | `DISCORD_WEBHOOK_DEV` |
+| `it-jobs` | IT Operations/Support Analyst, Security Analyst, Technical Support | `DISCORD_WEBHOOK_IT` |
+| `analyst-jobs` | Business Analyst, Business Systems Analyst, Functional Analyst | `DISCORD_WEBHOOK_ANALYST` |
+
+**To set up a channel:**
+
+1. In Discord, create the channel (e.g. `#dev-jobs`), then go to Channel
+   Settings → Integrations → Webhooks → New Webhook, and copy its URL.
+2. In GitHub: Settings → Secrets and variables → Actions → New repository
+   secret. Use the secret name from the table above, with the webhook URL
+   as the value.
+
+Until a category's secret exists, its jobs keep going to the default channel
+(`DISCORD_WEBHOOK_URL`), so you can set channels up one at a time. Jobs that
+match no category also go to the default channel.
+
+**Role pings (optional):** to ping a role (e.g. `@Dev`) for a channel's
+alerts, enable Developer Mode in Discord (User Settings → Advanced),
+right-click the role in Server Settings → Roles → Copy Role ID, and put it
+in that category's `ping_role_id`. Only that role is ever pinged, never
+`@everyone`.
+
 ## Location filtering
 
 `location_keywords` is matched against each job's location. When a Workday
