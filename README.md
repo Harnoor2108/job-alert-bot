@@ -91,15 +91,16 @@ Analyst" without also matching every word containing "it".
 
 ## Notes
 
-- GitHub Actions free tier gives you plenty of minutes for a 30-minute cron
-  on a script this lightweight. To change the frequency, edit the `cron` line
-  in `.github/workflows/job-alerts.yml`.
-- Runs never overlap, and the state commit is made by `github-actions[bot]`
-  and rebased onto `main` if `main` changed during the run.
-- The **Tests** workflow runs the test suite and validates `config.json` on
-  every pull request, so a typo in the config is caught before it breaks the bot.
+- GitHub Actions free tier gives you plenty of minutes for a 15-minute cron
+  on a script this lightweight.
 - The state file caps at the last 300 seen job IDs per company to keep the
   repo small — plenty of headroom for any single company's posting volume.
 - If a run fails to fetch a company's page (rate limiting, temporary
   outage), it just skips that company for the run and logs a warning to
   the Actions log — it won't crash the whole workflow.
+- To change how often the bot runs, edit the `cron` line in
+  `.github/workflows/job-alerts.yml`. Runs never overlap, and the state
+  commit is made by `github-actions[bot]` and rebased onto `main` if `main`
+  changed during the run.
+- The **Tests** workflow runs the test suite and validates `config.json` on
+  every pull request, so a typo in the config is caught before it breaks the bot.
