@@ -18,7 +18,7 @@
     },
     "/job/310320-Front-Street-West-Corporate-Toronto-Ontario/Software-Engineer-II_R_1519664": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-05"
     },
     "/job/3868-Bloor-Street-West-Etobicoke-Ontario/Customer-Experience-Associate_R_1493405-1": {
       "first_seen": "2026-11-04",
@@ -462,7 +462,7 @@
     },
     "/job/Toronto-Ontario/Data-Scientist-II_R_1514109": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-05"
     },
     "/job/Toronto-Ontario/Database-Platform-Engineer_R_1507941": {
       "first_seen": "2026-11-04",
@@ -470,7 +470,7 @@
     },
     "/job/Toronto-Ontario/DevOps-Engineer_R_1519678": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-05"
     },
     "/job/Toronto-Ontario/Developer--Business-Innovation---Transformation_R_1484263": {
       "first_seen": "2026-11-04",
@@ -507,6 +507,10 @@
     "/job/Toronto-Ontario/Engineer-II_R_1514305-1": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
+    },
+    "/job/Toronto-Ontario/Engineer-I_R_1502310": {
+      "first_seen": "2026-11-05",
+      "last_seen": "2026-11-05"
     },
     "/job/Toronto-Ontario/Engineer-I_R_1507340": {
       "first_seen": "2026-11-04",
@@ -750,7 +754,7 @@
     },
     "/job/Toronto-Ontario/Product-Control-Analyst_R_1518862": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-05"
     },
     "/job/Toronto-Ontario/Project-Analyst-II_R_1513630": {
       "first_seen": "2026-11-04",
@@ -786,11 +790,11 @@
     },
     "/job/Toronto-Ontario/Quality-Engineer-I_R_1500643": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-05"
     },
     "/job/Toronto-Ontario/Quality-Engineer-I_R_1501547": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-05"
     },
     "/job/Toronto-Ontario/Quality-Engineer-I_R_1502207": {
       "first_seen": "2026-11-04",
@@ -914,7 +918,7 @@
     },
     "/job/Toronto-Ontario/Software-Engineer-II--Systems-Support-_R_1519542": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-05"
     },
     "/job/Toronto-Ontario/Software-Engineer-III--Enterprise-Marketing-Technology-_R_1508280": {
       "first_seen": "2026-11-04",
@@ -982,7 +986,7 @@
     },
     "/job/Toronto-Ontario/Software-Engineer-II_R_1495469-1": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-05"
     },
     "/job/Toronto-Ontario/Software-Engineer-II_R_1500777-1": {
       "first_seen": "2026-11-04",
@@ -1042,7 +1046,7 @@
     },
     "/job/Toronto-Ontario/Software-Engineer-II_R_1516474": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-05"
     },
     "/job/Toronto-Ontario/Software-Engineer-II_R_1516795": {
       "first_seen": "2026-11-04",
@@ -1210,7 +1214,7 @@
     },
     "/job/Toronto-Ontario/to--IT-Ops-Specialist---Kubernetes-GCP_R_1488941": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-05"
     }
   },
   "intactfc:intactfc": {
@@ -1414,7 +1418,7 @@
   "manulife:MFCJH_Jobs": {
     "/job/Boston-Massachusetts/Payroll-Analyst_JR26081976": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-05"
     },
     "/job/CAN-Ontario---Full-Time-Remote/Private-Lending-Associate_JR26081649-1": {
       "first_seen": "2026-11-04",
@@ -1438,7 +1442,7 @@
     },
     "/job/CAN-Quebec-Montreal-900-Boulevard-de-Maisonneuve-Ouest/Back-end-Software-Engineer_JR26050821": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-05"
     },
     "/job/Toronto-Ontario/Associate-Technical-Specialist_JR26091428": {
       "first_seen": "2026-11-04",
@@ -1506,7 +1510,7 @@
     },
     "/job/Waterloo-Ontario/Salesforce-Functional-Analyst_JR26101237": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-05"
     },
     "/job/Waterloo-Ontario/Software-Engineer--Java--Cloud---Microservices-_JR26032159-1": {
       "first_seen": "2026-11-04",
@@ -1528,11 +1532,11 @@
   "sunlife:Experienced-Jobs": {
     "/job/Montreal-Quebec/Business-Data-Analyst_JR00129228": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-05"
     },
     "/job/North-York-Ontario/Security-Platform-Analyst_JR00128907": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-05"
     },
     "/job/North-York-Ontario/Technical-Business-Systems-Consultant--Operations_JR00128029": {
       "first_seen": "2026-11-04",
@@ -1580,13 +1584,13 @@
     },
     "/job/Waterloo-Ontario/ServiceNow-Associate-Software-Engineer_JR00129490": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-05"
     }
   },
   "desjardins:Desjardins": {
     "/job/Montral/Analyste-d-affaires--March-des-Capitaux--Entreprises_R2611816-2": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-05"
     },
     "/job/Toronto/Analyste--Administration-des-produits_R2609395-1": {
       "first_seen": "2026-11-04",
@@ -1718,7 +1722,7 @@
     },
     "/job/Toronto/Platform-Support-Analyst-III---File-Transfer-Services_JR106087-1": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-05"
     },
     "/job/Toronto/Pricing---Products---Partnerships-Analyst_JR106062": {
       "first_seen": "2026-11-04",
@@ -1806,11 +1810,11 @@
   "equifax:External": {
     "/job/CAN---Ontario---Toronto/Agentic-AI-Developer_J00178386": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-05"
     },
     "/job/CAN---Ontario---Toronto/Agentic-AI-Optimization-Developer_J00178408": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-05"
     },
     "/job/CAN---Ontario---Toronto/Product-Support-Engineer---Google-Cloud-Platform_J00178659": {
       "first_seen": "2026-11-04",
@@ -2359,7 +2363,7 @@
     },
     "/job/Toronto-ON/Junior-Technical-Writer-co-op_2622456-1": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-05"
     },
     "/job/Toronto-ON/Machine-Learning-Engineer-Co-op_2621721-1": {
       "first_seen": "2026-11-04",
@@ -2533,7 +2537,7 @@
     },
     "/job/Calgary-AB-CAN/GenAI-Software-Developer_R260018524": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-05"
     },
     "/job/Calgary-AB-CAN/Investment-Associate--BMO-Nesbitt-Burns_R260025342": {
       "first_seen": "2026-11-04",
@@ -2557,7 +2561,7 @@
     },
     "/job/Calgary-AB-CAN/Technical-Business-Analyst_R260021226": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-05"
     },
     "/job/Canmore-AB-CAN/Personal-Banking-Associate_R260010199": {
       "first_seen": "2026-11-04",
@@ -3169,15 +3173,15 @@
     },
     "/job/Toronto-ON-CAN/Cyber-Controls-Testing-Analyst_R260029824-1": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-05"
     },
     "/job/Toronto-ON-CAN/DDI-Network-Engineer_R260026568": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-05"
     },
     "/job/Toronto-ON-CAN/Data-Engineer--Fraud-Predictive-Analytics_R260029493": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-05"
     },
     "/job/Toronto-ON-CAN/Data-Engineer_R260023268": {
       "first_seen": "2026-11-04",
@@ -3193,7 +3197,7 @@
     },
     "/job/Toronto-ON-CAN/Data-Scientist_R260030675-1": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-05"
     },
     "/job/Toronto-ON-CAN/Data-and-Reporting-Analyst_R260028534": {
       "first_seen": "2026-11-04",
@@ -3201,11 +3205,11 @@
     },
     "/job/Toronto-ON-CAN/Developer---Data--AI--Platform---Support_R260024870": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-05"
     },
     "/job/Toronto-ON-CAN/Devops-Analyst---Technical_R260028097": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-05"
     },
     "/job/Toronto-ON-CAN/Equity-Research-Analyst---Canadian-Banks_R260020993": {
       "first_seen": "2026-11-04",
@@ -3473,7 +3477,7 @@
     },
     "/job/Toronto-ON-CAN/Software-Application-Developer---Loan-Servicing---AI-Enablement_R260021240": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-05"
     },
     "/job/Toronto-ON-CAN/Software-Developer----Java---Websphere---Payment-Systems-_R260010364": {
       "first_seen": "2026-11-04",
