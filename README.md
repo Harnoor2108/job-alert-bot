@@ -30,7 +30,7 @@ a new job matching your keywords is posted.
    Without this, the first run will treat every existing job as "new" and
    flood your Discord channel.
 
-5. That's it. The workflow runs every 30 minutes automatically. You can also
+5. Set up the schedule (see **Schedule** below). You can also
    trigger it manually from the repo's **Actions** tab → "Job Alerts" →
    "Run workflow" to test it right away.
 
@@ -171,8 +171,7 @@ stays fixed.
 
 ## Notes
 
-- GitHub Actions free tier gives you plenty of minutes for a 30-minute cron
-  on a script this lightweight.
+- GitHub Actions is free for public repos, so frequent runs cost nothing.
 - `state.json` records, per company, each alerted job's `first_seen` and
   `last_seen` dates. A job is only forgotten after it hasn't appeared in the
   matched results for 60 days (`STATE_RETENTION_DAYS` in `check_jobs.py`),
@@ -187,9 +186,42 @@ stays fixed.
 - If a run fails to fetch a company's page (rate limiting, temporary
   outage), it just skips that company for the run and logs a warning to
   the Actions log — it won't crash the whole workflow.
-- To change how often the bot runs, edit the `cron` line in
-  `.github/workflows/job-alerts.yml`. Runs never overlap, and the state
+- Runs never overlap, and the state
   commit is made by `github-actions[bot]` and rebased onto `main` if `main`
   changed during the run.
 - The **Tests** workflow runs the test suite and validates `config.json` on
   every pull request, so a typo in the config is caught before it breaks the bot.
+
+## Schedule
+
+GitHub's built-in `schedule` trigger is best-effort: under load it delays or
+drops runs, and in practice it fired only 3-5 times a day. So the bot is
+triggered from outside by **cron-job.org**, which calls GitHub's API to
+start the workflow on time:
+
+| Toronto time (America/Toronto) | How often |
+|---|---|
+| 7am - 9pm | every hour, at :05 |
+| 9pm - 7am | every 3 hours (12am, 3am, 6am) |
+
+That covers working hours in every Canadian time zone (8am-10pm Atlantic
+through 4am-6pm Pacific), 18 runs a day. Equivalent cron:
+`5 0,3,6-21 * * *` in America/Toronto.
+
+The workflow's own `schedule` (every 3 hours, UTC) stays as a backup in case
+cron-job.org is down. Because runs never overlap, extra runs are harmless.
+
+**Setting up the external timer:**
+
+1. Create a fine-grained GitHub token: Settings → Developer settings →
+   Personal access tokens → Fine-grained tokens. Give it access to only this
+   repository, with **Actions: Read and write** and nothing else. Set a
+   reminder before it expires.
+2. On cron-job.org, create a cronjob:
+   - URL: `https://api.github.com/repos/Harnoor2108/job-alert-bot/actions/workflows/job-alerts.yml/dispatches`
+   - Schedule: custom, minute `5`, hours `0,3,6-21`, every day, time zone
+     `America/Toronto`
+   - Advanced → method `POST`, body `{"ref":"main"}`, headers
+     `Authorization: Bearer <token>`, `Accept: application/vnd.github+json`,
+     `X-GitHub-Api-Version: 2022-11-28`
+3. Use **Test run**: a `204` response means a new "Job Alerts" run started.
