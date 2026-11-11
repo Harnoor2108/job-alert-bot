@@ -1,10 +1,14 @@
 name: Job Alerts
 
 on:
+  # Main schedule: an external timer (cron-job.org) calls the GitHub API to
+  # trigger this workflow, hourly 7am-9pm Toronto time and every 3 hours
+  # overnight. See "Schedule" in the README. GitHub's own cron is unreliable
+  # under load (it was firing only 3-5 times a day), so it's kept only as an
+  # occasional backup, at an odd minute to avoid the busy top of the hour.
   schedule:
-    # Every 30 minutes. GitHub Actions cron can lag under load, treat as approximate.
-    - cron: "*/30 * * * *"
-  workflow_dispatch: {}  # lets you trigger it manually from the Actions tab
+    - cron: "23 */3 * * *"  # backup: every 3 hours (UTC)
+  workflow_dispatch: {}  # used by the external timer, and the "Run workflow" button
 
 permissions:
   contents: write  # needed so the workflow can commit the updated state.json
