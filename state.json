@@ -1114,7 +1114,7 @@
     },
     "/job/Toronto-Ontario/Software-Engineer-I_R_1511144": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-12"
     },
     "/job/Toronto-Ontario/Software-Engineer-I_R_1514704-1": {
       "first_seen": "2026-11-04",
@@ -1503,6 +1503,10 @@
     "/job/CAN-Ontario-Waterloo-500-King-Street-North/Business-Intelligence-Analyst_JR26100268": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
+    },
+    "/job/CAN-Ontario-Waterloo-500-King-Street-North/Risk-Data-Scientist_JR26101415-1": {
+      "first_seen": "2026-11-12",
+      "last_seen": "2026-11-12"
     },
     "/job/CAN-Quebec-Montreal-900-Boulevard-de-Maisonneuve-Ouest/Back-end-Software-Engineer_JR26050821": {
       "first_seen": "2026-11-04",
@@ -1903,6 +1907,10 @@
     "/job/CAN---Ontario---Toronto/Agentic-AI-Optimization-Developer_J00178408": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-06"
+    },
+    "/job/CAN---Ontario---Toronto/Information-Technology-Security-Analyst_J00180047": {
+      "first_seen": "2026-11-12",
+      "last_seen": "2026-11-12"
     },
     "/job/CAN---Ontario---Toronto/Product-Support-Engineer---Google-Cloud-Platform_J00178659": {
       "first_seen": "2026-11-04",
@@ -2368,6 +2376,10 @@
     "/job/Toronto-ON/Consultant--Site-Reliability-Engineering-SRE-_2616652": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
+    },
+    "/job/Toronto-ON/Consultant--Site-Reliability-Engineering-SRE-_2622530": {
+      "first_seen": "2026-11-12",
+      "last_seen": "2026-11-12"
     },
     "/job/Toronto-ON/Consultant--Site-Reliability-Engineering_2615396": {
       "first_seen": "2026-11-04",
@@ -3606,6 +3618,10 @@
     "/job/Toronto-ON-CAN/ServiceNow-Developer_R260024416": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
+    },
+    "/job/Toronto-ON-CAN/ServiceNow-Technology-Lifecycle-Analyst_R260030995": {
+      "first_seen": "2026-11-12",
+      "last_seen": "2026-11-12"
     },
     "/job/Toronto-ON-CAN/Software-Application-Developer---Loan-Servicing---AI-Enablement_R260021240": {
       "first_seen": "2026-11-04",
