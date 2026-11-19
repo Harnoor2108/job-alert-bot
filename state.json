@@ -188,6 +188,10 @@
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
     },
+    "/job/Mount-Laurel-New-Jersey/IT-Data-Specialist--US-_R_1522896-1": {
+      "first_seen": "2026-11-19",
+      "last_seen": "2026-11-19"
+    },
     "/job/Mount-Laurel-New-Jersey/Pega-Developer--US-_R_1514529": {
       "first_seen": "2026-11-17",
       "last_seen": "2026-11-17"
@@ -458,7 +462,7 @@
     },
     "/job/Toronto-Ontario/Data-Engineer-II_R_1507239": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-07"
+      "last_seen": "2026-11-19"
     },
     "/job/Toronto-Ontario/Data-Engineer-II_R_1508808": {
       "first_seen": "2026-11-04",
@@ -692,6 +696,10 @@
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
     },
+    "/job/Toronto-Ontario/IT-Support-Analyst-III_R_1522013": {
+      "first_seen": "2026-11-19",
+      "last_seen": "2026-11-19"
+    },
     "/job/Toronto-Ontario/IT-Support-Analyst-IV--TD-Securities_R_1512942": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
@@ -707,6 +715,10 @@
     "/job/Toronto-Ontario/IT-Support-Analyst-IV_R_1514167": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
+    },
+    "/job/Toronto-Ontario/IT-Support-Analyst-IV_R_1522694": {
+      "first_seen": "2026-11-19",
+      "last_seen": "2026-11-19"
     },
     "/job/Toronto-Ontario/IT-Support-Data-Analyst-III_R_1500331": {
       "first_seen": "2026-11-04",
@@ -1094,7 +1106,7 @@
     },
     "/job/Toronto-Ontario/Software-Engineer-II_R_1509828": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-19"
     },
     "/job/Toronto-Ontario/Software-Engineer-II_R_1510307-1": {
       "first_seen": "2026-11-04",
@@ -1215,6 +1227,14 @@
     "/job/Toronto-Ontario/Solutions-Design-IT-Specialist_R_1514095": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
+    },
+    "/job/Toronto-Ontario/Solutions-Design-IT-Specialist_R_1520521": {
+      "first_seen": "2026-11-19",
+      "last_seen": "2026-11-19"
+    },
+    "/job/Toronto-Ontario/Solutions-Design-IT-Specialist_R_1520606": {
+      "first_seen": "2026-11-19",
+      "last_seen": "2026-11-19"
     },
     "/job/Toronto-Ontario/Solutions-IT-Designer---Oracle-EPM_R_1492465": {
       "first_seen": "2026-11-04",
@@ -1368,7 +1388,7 @@
     },
     "/job/Montral-Quebec-CAN/Data-Scientist-II_R154867": {
       "first_seen": "2026-11-10",
-      "last_seen": "2026-11-15"
+      "last_seen": "2026-11-19"
     },
     "/job/Montral-Quebec-CAN/Developer-DevOPS---4-months-Co-op-Internship_R155352": {
       "first_seen": "2026-11-04",
@@ -1751,6 +1771,10 @@
     "/job/Montral/Expert-ou-experte-en-solutions-technologiques--Environnement-numrique-de-travail_R2613857-1": {
       "first_seen": "2026-11-17",
       "last_seen": "2026-11-17"
+    },
+    "/job/Montral/Tech-Lead-Python_R2613819-1": {
+      "first_seen": "2026-11-19",
+      "last_seen": "2026-11-19"
     },
     "/job/Toronto/Analyste--Administration-des-produits_R2609395-1": {
       "first_seen": "2026-11-04",
@@ -2427,7 +2451,7 @@
     },
     "/job/Toronto-ON/Consultant--Full-Stack-Developer_2616928-1": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-19"
     },
     "/job/Toronto-ON/Consultant--Full-Stack-Developer_2618227": {
       "first_seen": "2026-11-04",
