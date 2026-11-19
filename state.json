@@ -1662,9 +1662,17 @@
     }
   },
   "sunlife:Experienced-Jobs": {
+    "/job/Brampton-Ontario/Data-Centre-Analyst_JR00129811": {
+      "first_seen": "2026-11-19",
+      "last_seen": "2026-11-19"
+    },
     "/job/Montreal-Quebec/Business-Data-Analyst_JR00129228": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-09"
+    },
+    "/job/North-York-Ontario/Business-System-Analyst_JR00129665": {
+      "first_seen": "2026-11-19",
+      "last_seen": "2026-11-19"
     },
     "/job/North-York-Ontario/Security-Platform-Analyst_JR00128907": {
       "first_seen": "2026-11-04",
@@ -1728,7 +1736,7 @@
     },
     "/job/Wellesley-Hills-Massachusetts/Identity-and-Access-Management-Analyst_JR00129762": {
       "first_seen": "2026-11-17",
-      "last_seen": "2026-11-17"
+      "last_seen": "2026-11-19"
     }
   },
   "desjardins:Desjardins": {
