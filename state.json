@@ -190,7 +190,7 @@
     },
     "/job/Mount-Laurel-New-Jersey/IT-Data-Specialist--US-_R_1522896-1": {
       "first_seen": "2026-11-19",
-      "last_seen": "2026-11-19"
+      "last_seen": "2026-11-20"
     },
     "/job/Mount-Laurel-New-Jersey/Pega-Developer--US-_R_1514529": {
       "first_seen": "2026-11-17",
@@ -770,7 +770,7 @@
     },
     "/job/Toronto-Ontario/Mainframe-Software-Engineer-II_R_1512837": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-19"
+      "last_seen": "2026-11-20"
     },
     "/job/Toronto-Ontario/Market-Risk-Analyst--5411-_R_1508768": {
       "first_seen": "2026-11-04",
@@ -914,7 +914,7 @@
     },
     "/job/Toronto-Ontario/Software-Engineer-I--Full-Stack-_R_1518503-1": {
       "first_seen": "2026-11-17",
-      "last_seen": "2026-11-19"
+      "last_seen": "2026-11-20"
     },
     "/job/Toronto-Ontario/Software-Engineer-I--Fullstack-Developer-_R_1505821": {
       "first_seen": "2026-11-04",
@@ -1062,7 +1062,7 @@
     },
     "/job/Toronto-Ontario/Software-Engineer-III_R_1516176": {
       "first_seen": "2026-11-19",
-      "last_seen": "2026-11-19"
+      "last_seen": "2026-11-20"
     },
     "/job/Toronto-Ontario/Software-Engineer-III_R_1519353-1": {
       "first_seen": "2026-11-04",
@@ -1303,6 +1303,10 @@
     "/job/Toronto-Ontario/Technical-Product-Owner--AI-Enabled-Enterprise-Solutions-_R_1512698": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
+    },
+    "/job/Toronto-Ontario/Technical-Product-Owner--AI-ML-Solutions_R_1522298": {
+      "first_seen": "2026-11-20",
+      "last_seen": "2026-11-20"
     },
     "/job/Toronto-Ontario/Transparency-Pricing---Risk-Developer_R_1500422": {
       "first_seen": "2026-11-04",
@@ -1620,6 +1624,10 @@
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
     },
+    "/job/Toronto-Ontario/Quality-Engineer_JR26110307-1": {
+      "first_seen": "2026-11-20",
+      "last_seen": "2026-11-20"
+    },
     "/job/Toronto-Ontario/Software-Engineer--Banking-Technology_JR26110161-1": {
       "first_seen": "2026-11-18",
       "last_seen": "2026-11-18"
@@ -1767,6 +1775,10 @@
     "/job/Montral/Analyste-d-affaires--March-des-Capitaux--Entreprises_R2611816-2": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-08"
+    },
+    "/job/Montral/Analyste-en-valorisation-de-donnes--Assurance-et-pargne-Collectives_R2613850-1": {
+      "first_seen": "2026-11-20",
+      "last_seen": "2026-11-20"
     },
     "/job/Montral/Architecte-TI_R2600074-2": {
       "first_seen": "2026-11-17",
@@ -1993,6 +2005,10 @@
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
     },
+    "666eed2e-a629-4dae-8afd-cae397cca694": {
+      "first_seen": "2026-11-20",
+      "last_seen": "2026-11-20"
+    },
     "6ec25484-b204-48a6-ab91-7b0b1625aa02": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
@@ -2030,7 +2046,7 @@
     },
     "/job/CAN---Ontario---Toronto/Information-Technology-Security-Analyst_J00180047": {
       "first_seen": "2026-11-12",
-      "last_seen": "2026-11-17"
+      "last_seen": "2026-11-20"
     },
     "/job/CAN---Ontario---Toronto/Product-Support-Engineer---Google-Cloud-Platform_J00178659": {
       "first_seen": "2026-11-04",
