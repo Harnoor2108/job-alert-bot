@@ -1716,7 +1716,7 @@
     },
     "/job/North-York-Ontario/Business-System-Analyst_JR00129665": {
       "first_seen": "2026-11-19",
-      "last_seen": "2026-11-19"
+      "last_seen": "2026-11-21"
     },
     "/job/North-York-Ontario/Security-Platform-Analyst_JR00128907": {
       "first_seen": "2026-11-04",
@@ -1966,6 +1966,14 @@
     }
   },
   "kyndryl:KyndrylProfessionalCareers": {
+    "/job/Bangalore-Karnataka-India/SAP-ABAP-Developer_R-65651": {
+      "first_seen": "2026-11-21",
+      "last_seen": "2026-11-21"
+    },
+    "/job/Chennai-Tamil-Nadu-India/BI-Developer--Power-BI-_R-71753": {
+      "first_seen": "2026-11-21",
+      "last_seen": "2026-11-21"
+    },
     "/job/Chennai-Tamil-Nadu-India/Data-Analyst---Databricks---Power-BI_R-71781": {
       "first_seen": "2026-11-18",
       "last_seen": "2026-11-18"
@@ -1973,6 +1981,10 @@
     "/job/Chennai-Tamil-Nadu-India/MIS-ASSISTANT_R-71997": {
       "first_seen": "2026-11-18",
       "last_seen": "2026-11-18"
+    },
+    "/job/Greater-Noida-Uttar-Pradesh-India/Vue-Js-Frontend-Developer_R-72429-1": {
+      "first_seen": "2026-11-21",
+      "last_seen": "2026-11-21"
     },
     "/job/Research-Triangle-Park-NC-USA/Business-Analyst---MAX-Solution-Implementation_R-65502": {
       "first_seen": "2026-11-18",
@@ -3201,7 +3213,7 @@
     },
     "/job/Toronto-ON-CAN/AI-Engineer_R260029413": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-19"
+      "last_seen": "2026-11-21"
     },
     "/job/Toronto-ON-CAN/AI-Platform-Analyst--8-months--Co-op-Internship----8-months_R260026129-2": {
       "first_seen": "2026-11-04",
@@ -3786,6 +3798,10 @@
     "/job/Toronto-ON-CAN/Research-Analyst---Canadian-Equity---Resources_R260026242": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
+    },
+    "/job/Toronto-ON-CAN/Scorecard-Reporting-Analyst_R260031276": {
+      "first_seen": "2026-11-21",
+      "last_seen": "2026-11-21"
     },
     "/job/Toronto-ON-CAN/ServiceNow-Developer_R260024416": {
       "first_seen": "2026-11-04",
