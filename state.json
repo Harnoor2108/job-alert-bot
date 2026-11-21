@@ -1938,7 +1938,7 @@
     },
     "/job/Toronto/Platform-Support-Analyst-III---File-Transfer-Services_JR106087-1": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-07"
+      "last_seen": "2026-11-21"
     },
     "/job/Toronto/Pricing---Products---Partnerships-Analyst_JR106062": {
       "first_seen": "2026-11-04",
@@ -3231,6 +3231,10 @@
       "first_seen": "2026-11-19",
       "last_seen": "2026-11-19"
     },
+    "/job/Toronto-ON-CAN/AI-Software-Engineer_R260032207": {
+      "first_seen": "2026-11-21",
+      "last_seen": "2026-11-21"
+    },
     "/job/Toronto-ON-CAN/AI-Systems-Engineer--Cyber-Detection-Engineering-_R260021616": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
@@ -3523,9 +3527,17 @@
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-09"
     },
+    "/job/Toronto-ON-CAN/Developer---Data--AI--Platform---Support_R260031252": {
+      "first_seen": "2026-11-21",
+      "last_seen": "2026-11-21"
+    },
     "/job/Toronto-ON-CAN/Devops-Analyst---Technical_R260028097": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-08"
+    },
+    "/job/Toronto-ON-CAN/Engineering-Portfolio-Architect_R260031514": {
+      "first_seen": "2026-11-21",
+      "last_seen": "2026-11-21"
     },
     "/job/Toronto-ON-CAN/Equity-Research-Analyst---Canadian-Banks_R260020993": {
       "first_seen": "2026-11-04",
@@ -3786,6 +3798,10 @@
     "/job/Toronto-ON-CAN/QA-Analyst_R260024369": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
+    },
+    "/job/Toronto-ON-CAN/Quality-Engineer--SRE_R260032197": {
+      "first_seen": "2026-11-21",
+      "last_seen": "2026-11-21"
     },
     "/job/Toronto-ON-CAN/Quantitative-Analyst--Summer-2027--Co-op-Internship----4-Months_R260031097": {
       "first_seen": "2026-11-06",
