@@ -462,11 +462,15 @@
     },
     "/job/Toronto-Ontario/Data-Engineer-II_R_1507239": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-19"
+      "last_seen": "2026-11-21"
     },
     "/job/Toronto-Ontario/Data-Engineer-II_R_1508808": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
+    },
+    "/job/Toronto-Ontario/Data-Engineer-II_R_1509641": {
+      "first_seen": "2026-11-21",
+      "last_seen": "2026-11-21"
     },
     "/job/Toronto-Ontario/Data-Engineer-II_R_1515384": {
       "first_seen": "2026-11-04",
@@ -519,6 +523,10 @@
     "/job/Toronto-Ontario/Engineer-II---IAM-Federation-Services_R_1512952": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
+    },
+    "/job/Toronto-Ontario/Engineer-II---IAM-SailPoint-Developer-Engineer_R_1518458": {
+      "first_seen": "2026-11-21",
+      "last_seen": "2026-11-21"
     },
     "/job/Toronto-Ontario/Engineer-II---WIAM_R_1471479": {
       "first_seen": "2026-11-04",
@@ -1110,7 +1118,7 @@
     },
     "/job/Toronto-Ontario/Software-Engineer-II_R_1509828": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-19"
+      "last_seen": "2026-11-21"
     },
     "/job/Toronto-Ontario/Software-Engineer-II_R_1510307-1": {
       "first_seen": "2026-11-04",
@@ -1147,6 +1155,10 @@
     "/job/Toronto-Ontario/Software-Engineer-II_R_1519685": {
       "first_seen": "2026-11-06",
       "last_seen": "2026-11-10"
+    },
+    "/job/Toronto-Ontario/Software-Engineer-II_R_1523310": {
+      "first_seen": "2026-11-21",
+      "last_seen": "2026-11-21"
     },
     "/job/Toronto-Ontario/Software-Engineer-I_R_1498826-1": {
       "first_seen": "2026-11-04",
@@ -2007,7 +2019,7 @@
     },
     "666eed2e-a629-4dae-8afd-cae397cca694": {
       "first_seen": "2026-11-20",
-      "last_seen": "2026-11-20"
+      "last_seen": "2026-11-21"
     },
     "6ec25484-b204-48a6-ab91-7b0b1625aa02": {
       "first_seen": "2026-11-04",
@@ -2063,6 +2075,14 @@
     "/job/CRI-Sabana/IT-Techbar-Technician-Junior_J00180154-1": {
       "first_seen": "2026-11-16",
       "last_seen": "2026-11-18"
+    },
+    "/job/IND-Trivandrum-Equifax-Analytics-PEC/Software-Engineer-II_J00179309-1": {
+      "first_seen": "2026-11-21",
+      "last_seen": "2026-11-21"
+    },
+    "/job/IND-Trivandrum-Equifax-Analytics-PEC/Software-Engineer-I_J00179300-1": {
+      "first_seen": "2026-11-21",
+      "last_seen": "2026-11-21"
     }
   },
   "transunion:TransUnion": {
