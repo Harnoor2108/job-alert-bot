@@ -508,6 +508,10 @@
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-07"
     },
+    "/job/Toronto-Ontario/Data-Scientist-II_R_1523015": {
+      "first_seen": "2026-11-25",
+      "last_seen": "2026-11-25"
+    },
     "/job/Toronto-Ontario/Database-Platform-Engineer_R_1507941": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
@@ -571,6 +575,10 @@
     "/job/Toronto-Ontario/Engineer-I_R_1517641": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
+    },
+    "/job/Toronto-Ontario/Engineer-I_R_1518368": {
+      "first_seen": "2026-11-25",
+      "last_seen": "2026-11-25"
     },
     "/job/Toronto-Ontario/Finance-Analyst_R_1498436": {
       "first_seen": "2026-11-04",
@@ -750,7 +758,7 @@
     },
     "/job/Toronto-Ontario/Java-Developer--TD-Securities_R_1506663": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-24"
+      "last_seen": "2026-11-25"
     },
     "/job/Toronto-Ontario/Java-Developer--TD-Securities_R_1513673": {
       "first_seen": "2026-11-04",
@@ -880,6 +888,10 @@
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
     },
+    "/job/Toronto-Ontario/Quality-Engineer-I_R_1521575": {
+      "first_seen": "2026-11-25",
+      "last_seen": "2026-11-25"
+    },
     "/job/Toronto-Ontario/Quality-Engineering-III_R_1501733": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
@@ -994,7 +1006,7 @@
     },
     "/job/Toronto-Ontario/Software-Engineer-II--Salesforce-Loyalty-Management-Developer-_R_1509038": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-25"
     },
     "/job/Toronto-Ontario/Software-Engineer-II--Salesforce_R_1486443": {
       "first_seen": "2026-11-04",
@@ -1374,6 +1386,10 @@
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
     },
+    "/job/Montral-Quebec-CAN/Analyste-d-affaires-II--Centre-d-excellence-en-annotation_R156559": {
+      "first_seen": "2026-11-25",
+      "last_seen": "2026-11-25"
+    },
     "/job/Montral-Quebec-CAN/Analyste-d-affaires-TI-II--Intact-Lab--poste-temporaire-de-1-an-_R154876": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
@@ -1438,6 +1454,10 @@
       "first_seen": "2026-11-05",
       "last_seen": "2026-11-10"
     },
+    "/job/Montral-Quebec-CAN/Web-Developer--Front-End-and-Back-End----JavaScript---UX_R156778": {
+      "first_seen": "2026-11-25",
+      "last_seen": "2026-11-25"
+    },
     "/job/Ottawa-Ontario-CAN/Conseiller-Ventes---Service--la-clientle---Ottawa_R156205": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
@@ -1477,6 +1497,10 @@
     "/job/Toronto-Ontario-CAN/AI-Developer---4-Month-Internship-Co-op--Winter-2027--_R155234": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
+    },
+    "/job/Toronto-Ontario-CAN/AI-Specialist---Commercial-and-Global-Specialty-Lines_R156363": {
+      "first_seen": "2026-11-25",
+      "last_seen": "2026-11-25"
     },
     "/job/Toronto-Ontario-CAN/Actuarial-Analyst---4-Month-Co-Op-Internship--Winter-2027-Summer-2027---Fall-2027-_R155429-1": {
       "first_seen": "2026-11-04",
@@ -1802,7 +1826,7 @@
     },
     "/job/Montral/Scientifique-de-donnes--Assurance-de-personnes-et-Gestion-de-patrimoine_R2614382": {
       "first_seen": "2026-11-24",
-      "last_seen": "2026-11-24"
+      "last_seen": "2026-11-25"
     },
     "/job/Montral/Tech-Lead-Python_R2613819-1": {
       "first_seen": "2026-11-19",
@@ -1976,11 +2000,19 @@
   "kyndryl:KyndrylProfessionalCareers": {
     "/job/Bangalore-Karnataka-India/Mainframe-Application-Developer_R-72254-1": {
       "first_seen": "2026-11-23",
-      "last_seen": "2026-11-23"
+      "last_seen": "2026-11-25"
     },
     "/job/Bangalore-Karnataka-India/Mainframe-Application-Developer_R-72257": {
       "first_seen": "2026-11-23",
-      "last_seen": "2026-11-23"
+      "last_seen": "2026-11-25"
+    },
+    "/job/Bangalore-Karnataka-India/Mainframe-Application-Developer_R-72260-1": {
+      "first_seen": "2026-11-25",
+      "last_seen": "2026-11-25"
+    },
+    "/job/Bangalore-Karnataka-India/Mainframe-Application-Developer_R-72261": {
+      "first_seen": "2026-11-25",
+      "last_seen": "2026-11-25"
     },
     "/job/Bangalore-Karnataka-India/SAP-ABAP-Developer_R-65651": {
       "first_seen": "2026-11-21",
@@ -2002,6 +2034,10 @@
       "first_seen": "2026-11-23",
       "last_seen": "2026-11-23"
     },
+    "/job/Chennai-Tamil-Nadu-India/Intelligent-Automation-Developer--RPA-Developer_R-72232-1": {
+      "first_seen": "2026-11-25",
+      "last_seen": "2026-11-25"
+    },
     "/job/Chennai-Tamil-Nadu-India/MIS-ASSISTANT_R-71997": {
       "first_seen": "2026-11-18",
       "last_seen": "2026-11-18"
@@ -2009,6 +2045,10 @@
     "/job/Greater-Noida-Uttar-Pradesh-India/Vue-Js-Frontend-Developer_R-72429-1": {
       "first_seen": "2026-11-21",
       "last_seen": "2026-11-22"
+    },
+    "/job/INMANBP-Bangalore-INMANBP-Manyatha/Intelligent-Automation-Developer--RPA-Developer_R-72236-1": {
+      "first_seen": "2026-11-25",
+      "last_seen": "2026-11-25"
     },
     "/job/Research-Triangle-Park-NC-USA/Business-Analyst---MAX-Solution-Implementation_R-65502": {
       "first_seen": "2026-11-18",
@@ -2055,7 +2095,7 @@
     },
     "666eed2e-a629-4dae-8afd-cae397cca694": {
       "first_seen": "2026-11-20",
-      "last_seen": "2026-11-24"
+      "last_seen": "2026-11-25"
     },
     "6ec25484-b204-48a6-ab91-7b0b1625aa02": {
       "first_seen": "2026-11-04",
@@ -3265,7 +3305,7 @@
     },
     "/job/Toronto-ON-CAN/AI-Software-Engineer_R260032207": {
       "first_seen": "2026-11-21",
-      "last_seen": "2026-11-22"
+      "last_seen": "2026-11-25"
     },
     "/job/Toronto-ON-CAN/AI-Systems-Engineer--Cyber-Detection-Engineering-_R260021616": {
       "first_seen": "2026-11-04",
@@ -3561,7 +3601,7 @@
     },
     "/job/Toronto-ON-CAN/Developer---Data--AI--Platform---Support_R260031252": {
       "first_seen": "2026-11-21",
-      "last_seen": "2026-11-22"
+      "last_seen": "2026-11-25"
     },
     "/job/Toronto-ON-CAN/Devops-Analyst---Technical_R260028097": {
       "first_seen": "2026-11-04",
@@ -3833,7 +3873,7 @@
     },
     "/job/Toronto-ON-CAN/Quality-Engineer--SRE_R260032197": {
       "first_seen": "2026-11-21",
-      "last_seen": "2026-11-21"
+      "last_seen": "2026-11-25"
     },
     "/job/Toronto-ON-CAN/Quantitative-Analyst--Summer-2027--Co-op-Internship----4-Months_R260031097": {
       "first_seen": "2026-11-06",
@@ -3862,6 +3902,10 @@
     "/job/Toronto-ON-CAN/Software-Application-Developer---Loan-Servicing---AI-Enablement_R260021240": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-07"
+    },
+    "/job/Toronto-ON-CAN/Software-Application-Developer---Loan-Servicing---AI-Enablement_R260032217": {
+      "first_seen": "2026-11-25",
+      "last_seen": "2026-11-25"
     },
     "/job/Toronto-ON-CAN/Software-Developer----Java---Websphere---Payment-Systems-_R260010364": {
       "first_seen": "2026-11-04",
