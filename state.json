@@ -774,7 +774,11 @@
     },
     "/job/Toronto-Ontario/Machine-Learning-Engineer-II_R_1518866": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-26"
+    },
+    "/job/Toronto-Ontario/Machine-Learning-Engineer_R_1431479": {
+      "first_seen": "2026-11-26",
+      "last_seen": "2026-11-26"
     },
     "/job/Toronto-Ontario/Mainframe-Developer_R_1502414": {
       "first_seen": "2026-11-04",
@@ -786,7 +790,7 @@
     },
     "/job/Toronto-Ontario/Mainframe-Software-Engineer-II_R_1512837": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-20"
+      "last_seen": "2026-11-26"
     },
     "/job/Toronto-Ontario/Market-Risk-Analyst--5411-_R_1508768": {
       "first_seen": "2026-11-04",
@@ -814,7 +818,7 @@
     },
     "/job/Toronto-Ontario/Mobile-Software-Engineer-I_R_1520654-1": {
       "first_seen": "2026-11-05",
-      "last_seen": "2026-11-10"
+      "last_seen": "2026-11-26"
     },
     "/job/Toronto-Ontario/Mulesoft-Software-Engineer-II_R_1512703": {
       "first_seen": "2026-11-04",
@@ -826,7 +830,7 @@
     },
     "/job/Toronto-Ontario/Oracle-Cloud-ERP-Developer_R_1520032": {
       "first_seen": "2026-11-12",
-      "last_seen": "2026-11-16"
+      "last_seen": "2026-11-26"
     },
     "/job/Toronto-Ontario/Product-Control-Analyst_R_1514116": {
       "first_seen": "2026-11-04",
@@ -934,7 +938,7 @@
     },
     "/job/Toronto-Ontario/Software-Engineer-I--Full-Stack-_R_1518503-1": {
       "first_seen": "2026-11-17",
-      "last_seen": "2026-11-20"
+      "last_seen": "2026-11-26"
     },
     "/job/Toronto-Ontario/Software-Engineer-I--Fullstack-Developer-_R_1505821": {
       "first_seen": "2026-11-04",
@@ -959,6 +963,10 @@
     "/job/Toronto-Ontario/Software-Engineer-II---Release---Deploy_R_1508474": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
+    },
+    "/job/Toronto-Ontario/Software-Engineer-II--Full-Stack---Java-_R_1522024-1": {
+      "first_seen": "2026-11-26",
+      "last_seen": "2026-11-26"
     },
     "/job/Toronto-Ontario/Software-Engineer-II--Full-Stack-Developer-_R_1504012": {
       "first_seen": "2026-11-04",
@@ -1006,7 +1014,7 @@
     },
     "/job/Toronto-Ontario/Software-Engineer-II--Salesforce-Loyalty-Management-Developer-_R_1509038": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-25"
+      "last_seen": "2026-11-26"
     },
     "/job/Toronto-Ontario/Software-Engineer-II--Salesforce_R_1486443": {
       "first_seen": "2026-11-04",
@@ -1015,6 +1023,10 @@
     "/job/Toronto-Ontario/Software-Engineer-II--Systems-Support-_R_1519542": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-09"
+    },
+    "/job/Toronto-Ontario/Software-Engineer-II-Full-Stack--Branch-Systems-_R_1513988": {
+      "first_seen": "2026-11-26",
+      "last_seen": "2026-11-26"
     },
     "/job/Toronto-Ontario/Software-Engineer-III---IVR_R_1521460": {
       "first_seen": "2026-11-13",
@@ -1082,11 +1094,15 @@
     },
     "/job/Toronto-Ontario/Software-Engineer-III_R_1516176": {
       "first_seen": "2026-11-19",
-      "last_seen": "2026-11-20"
+      "last_seen": "2026-11-26"
     },
     "/job/Toronto-Ontario/Software-Engineer-III_R_1519353-1": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-26"
+    },
+    "/job/Toronto-Ontario/Software-Engineer-III_R_1523019": {
+      "first_seen": "2026-11-26",
+      "last_seen": "2026-11-26"
     },
     "/job/Toronto-Ontario/Software-Engineer-II_R_1475436": {
       "first_seen": "2026-11-04",
@@ -1162,11 +1178,15 @@
     },
     "/job/Toronto-Ontario/Software-Engineer-II_R_1519357": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-26"
     },
     "/job/Toronto-Ontario/Software-Engineer-II_R_1519685": {
       "first_seen": "2026-11-06",
       "last_seen": "2026-11-10"
+    },
+    "/job/Toronto-Ontario/Software-Engineer-II_R_1521794": {
+      "first_seen": "2026-11-26",
+      "last_seen": "2026-11-26"
     },
     "/job/Toronto-Ontario/Software-Engineer-II_R_1523310": {
       "first_seen": "2026-11-21",
@@ -1199,6 +1219,10 @@
     "/job/Toronto-Ontario/Software-Engineer-I_R_1514704-1": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
+    },
+    "/job/Toronto-Ontario/Software-Engineer-I_R_1519716-1": {
+      "first_seen": "2026-11-26",
+      "last_seen": "2026-11-26"
     },
     "/job/Toronto-Ontario/Solutions-Design-IT-Specialist--SAP-Business-Objects-Technical-Support-Analyst-_R_1505244": {
       "first_seen": "2026-11-04",
@@ -1456,7 +1480,7 @@
     },
     "/job/Montral-Quebec-CAN/Web-Developer--Front-End-and-Back-End----JavaScript---UX_R156778": {
       "first_seen": "2026-11-25",
-      "last_seen": "2026-11-25"
+      "last_seen": "2026-11-26"
     },
     "/job/Ottawa-Ontario-CAN/Conseiller-Ventes---Service--la-clientle---Ottawa_R156205": {
       "first_seen": "2026-11-04",
@@ -1500,7 +1524,7 @@
     },
     "/job/Toronto-Ontario-CAN/AI-Specialist---Commercial-and-Global-Specialty-Lines_R156363": {
       "first_seen": "2026-11-25",
-      "last_seen": "2026-11-25"
+      "last_seen": "2026-11-26"
     },
     "/job/Toronto-Ontario-CAN/Actuarial-Analyst---4-Month-Co-Op-Internship--Winter-2027-Summer-2027---Fall-2027-_R155429-1": {
       "first_seen": "2026-11-04",
@@ -1584,6 +1608,14 @@
     }
   },
   "manulife:MFCJH_Jobs": {
+    "/job/Boston-Massachusetts/AI-Engineer_JR26111069": {
+      "first_seen": "2026-11-26",
+      "last_seen": "2026-11-26"
+    },
+    "/job/Boston-Massachusetts/Associate-Data-Scientist_JR26110981": {
+      "first_seen": "2026-11-26",
+      "last_seen": "2026-11-26"
+    },
     "/job/Boston-Massachusetts/Payroll-Analyst_JR26081976": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-07"
@@ -1826,7 +1858,7 @@
     },
     "/job/Montral/Scientifique-de-donnes--Assurance-de-personnes-et-Gestion-de-patrimoine_R2614382": {
       "first_seen": "2026-11-24",
-      "last_seen": "2026-11-25"
+      "last_seen": "2026-11-26"
     },
     "/job/Montral/Tech-Lead-Python_R2613819-1": {
       "first_seen": "2026-11-19",
