@@ -790,7 +790,7 @@
     },
     "/job/Toronto-Ontario/Mainframe-Software-Engineer-II_R_1512837": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-26"
+      "last_seen": "2026-11-27"
     },
     "/job/Toronto-Ontario/Market-Risk-Analyst--5411-_R_1508768": {
       "first_seen": "2026-11-04",
@@ -818,7 +818,7 @@
     },
     "/job/Toronto-Ontario/Mobile-Software-Engineer-I_R_1520654-1": {
       "first_seen": "2026-11-05",
-      "last_seen": "2026-11-26"
+      "last_seen": "2026-11-27"
     },
     "/job/Toronto-Ontario/Mulesoft-Software-Engineer-II_R_1512703": {
       "first_seen": "2026-11-04",
@@ -960,13 +960,17 @@
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
     },
+    "/job/Toronto-Ontario/Software-Engineer-II---Mainframe_R_1521465": {
+      "first_seen": "2026-11-27",
+      "last_seen": "2026-11-27"
+    },
     "/job/Toronto-Ontario/Software-Engineer-II---Release---Deploy_R_1508474": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
     },
     "/job/Toronto-Ontario/Software-Engineer-II--Full-Stack---Java-_R_1522024-1": {
       "first_seen": "2026-11-26",
-      "last_seen": "2026-11-26"
+      "last_seen": "2026-11-27"
     },
     "/job/Toronto-Ontario/Software-Engineer-II--Full-Stack-Developer-_R_1504012": {
       "first_seen": "2026-11-04",
@@ -1014,7 +1018,7 @@
     },
     "/job/Toronto-Ontario/Software-Engineer-II--Salesforce-Loyalty-Management-Developer-_R_1509038": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-26"
+      "last_seen": "2026-11-27"
     },
     "/job/Toronto-Ontario/Software-Engineer-II--Salesforce_R_1486443": {
       "first_seen": "2026-11-04",
@@ -1026,7 +1030,7 @@
     },
     "/job/Toronto-Ontario/Software-Engineer-II-Full-Stack--Branch-Systems-_R_1513988": {
       "first_seen": "2026-11-26",
-      "last_seen": "2026-11-26"
+      "last_seen": "2026-11-27"
     },
     "/job/Toronto-Ontario/Software-Engineer-III---IVR_R_1521460": {
       "first_seen": "2026-11-13",
@@ -1046,7 +1050,7 @@
     },
     "/job/Toronto-Ontario/Software-Engineer-III--Full-Stack-API-Integration-_R_1513237": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-04"
+      "last_seen": "2026-11-27"
     },
     "/job/Toronto-Ontario/Software-Engineer-III_R_1501503": {
       "first_seen": "2026-11-04",
@@ -1094,15 +1098,15 @@
     },
     "/job/Toronto-Ontario/Software-Engineer-III_R_1516176": {
       "first_seen": "2026-11-19",
-      "last_seen": "2026-11-26"
+      "last_seen": "2026-11-27"
     },
     "/job/Toronto-Ontario/Software-Engineer-III_R_1519353-1": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-26"
+      "last_seen": "2026-11-27"
     },
     "/job/Toronto-Ontario/Software-Engineer-III_R_1523019": {
       "first_seen": "2026-11-26",
-      "last_seen": "2026-11-26"
+      "last_seen": "2026-11-27"
     },
     "/job/Toronto-Ontario/Software-Engineer-II_R_1475436": {
       "first_seen": "2026-11-04",
@@ -1178,7 +1182,7 @@
     },
     "/job/Toronto-Ontario/Software-Engineer-II_R_1519357": {
       "first_seen": "2026-11-04",
-      "last_seen": "2026-11-26"
+      "last_seen": "2026-11-27"
     },
     "/job/Toronto-Ontario/Software-Engineer-II_R_1519685": {
       "first_seen": "2026-11-06",
@@ -1186,7 +1190,7 @@
     },
     "/job/Toronto-Ontario/Software-Engineer-II_R_1521794": {
       "first_seen": "2026-11-26",
-      "last_seen": "2026-11-26"
+      "last_seen": "2026-11-27"
     },
     "/job/Toronto-Ontario/Software-Engineer-II_R_1523310": {
       "first_seen": "2026-11-21",
@@ -1222,7 +1226,7 @@
     },
     "/job/Toronto-Ontario/Software-Engineer-I_R_1519716-1": {
       "first_seen": "2026-11-26",
-      "last_seen": "2026-11-26"
+      "last_seen": "2026-11-27"
     },
     "/job/Toronto-Ontario/Solutions-Design-IT-Specialist--SAP-Business-Objects-Technical-Support-Analyst-_R_1505244": {
       "first_seen": "2026-11-04",
@@ -2555,7 +2559,7 @@
     },
     "/job/Toronto-ON/Consultant---Application-Developer_2623662": {
       "first_seen": "2026-11-25",
-      "last_seen": "2026-11-25"
+      "last_seen": "2026-11-27"
     },
     "/job/Toronto-ON/Consultant--Application-Developer--Data-Engineer-_2618494": {
       "first_seen": "2026-11-04",
@@ -2648,6 +2652,10 @@
     "/job/Toronto-ON/Consultant--IT-Quality-Assurance_2616446": {
       "first_seen": "2026-11-04",
       "last_seen": "2026-11-04"
+    },
+    "/job/Toronto-ON/Consultant--IT-Quality-Assurance_2622051-1": {
+      "first_seen": "2026-11-27",
+      "last_seen": "2026-11-27"
     },
     "/job/Toronto-ON/Consultant--IT-Quality-Assurance_2622393": {
       "first_seen": "2026-11-04",
@@ -2823,7 +2831,7 @@
     },
     "/job/Toronto-ON/Senior-Application-Consultant--Azure-Developer_2624434": {
       "first_seen": "2026-11-25",
-      "last_seen": "2026-11-25"
+      "last_seen": "2026-11-27"
     },
     "/job/Toronto-ON/Service-Designer-Technical-Consultant--Mobility-Platform-_2612836-1": {
       "first_seen": "2026-11-04",
